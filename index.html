@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080b12">
+  <title>CrazyTurk Thumbnail Maker</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top, #18213a 0%, #090c14 42%, #050608 100%);
+      color: white;
+      min-height: 100vh;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 600px;
+      margin: auto;
+      padding: 22px 16px 50px;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .logo h1 {
+      margin: 0;
+      font-size: 27px;
+      font-weight: 900;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: #ffc400;
+    }
+
+    .logo p {
+      color: #9ca3af;
+      margin: 7px 0 0;
+      font-size: 14px;
+    }
+
+    .card {
+      background: rgba(20, 25, 38, 0.94);
+      border: 1px solid #2b3243;
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 12px 35px rgba(0,0,0,.25);
+    }
+
+    .card h2 {
+      font-size: 17px;
+      margin: 0 0 15px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      color: #b7bdca;
+      margin: 15px 0 7px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid #353d50;
+      background: #0d111c;
+      color: white;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #ffc400;
+    }
+
+    .upload {
+      border: 2px dashed #3b4355;
+      border-radius: 16px;
+      padding: 25px 12px;
+      text-align: center;
+      cursor: pointer;
+      background: #0d111b;
+    }
+
+    .upload strong {
+      display: block;
+      font-size: 17px;
+      margin-bottom: 5px;
+    }
+
+    .upload small {
+      color: #8e96a8;
+    }
+
+    #imageInput {
+      display: none;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .formatBtn {
+      padding: 14px 8px;
+      border-radius: 12px;
+      border: 1px solid #353d50;
+      background: #101522;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .formatBtn.active {
+      background: #ffc400;
+      color: #090909;
+      border-color: #ffc400;
+    }
+
+    .generate {
+      width: 100%;
+      padding: 17px;
+      margin-top: 18px;
+      border: 0;
+      border-radius: 14px;
+      background: linear-gradient(90deg, #ffb800, #ffe259);
+      color: #080808;
+      font-size: 17px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .previewTitle {
+      margin: 5px 0 12px;
+      font-size: 16px;
+    }
+
+    .previewWrap {
+      width: 100%;
+      background: #000;
+      border-radius: 15px;
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 16 / 9;
+    }
+
+    .previewWrap.short {
+      aspect-ratio: 9 / 16;
+      max-width: 300px;
+      margin: auto;
+    }
+
+    #previewImage {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: flex-end;
+      padding: 18px;
+      background:
+        linear-gradient(
+          to top,
+          rgba(0,0,0,.9),
+          rgba(0,0,0,.08) 65%
+        );
+    }
+
+    #previewText {
+      font-size: clamp(24px, 7vw, 45px);
+      line-height: .95;
+      font-weight: 1000;
+      text-transform: uppercase;
+      text-shadow:
+        3px 3px 0 #000,
+        -2px -2px 0 #000,
+        0 4px 12px #000;
+      color: #ffd400;
+      max-width: 95%;
+    }
+
+    .emptyText {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #687083;
+      text-align: center;
+      padding: 30px;
+    }
+
+    .footer {
+      text-align: center;
+      color: #666e7d;
+      font-size: 12px;
+      margin-top: 25px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="logo">
+    <h1>CRAZY<span>TURK</span></h1>
+    <p>CODM Thumbnail Studio</p>
+  </div>
+
+  <div class="card">
+    <h2>🎮 Kapak Türü</h2>
+
+    <div class="buttons">
+      <button
+        class="formatBtn active"
+        id="youtubeBtn"
+        onclick="setFormat('youtube')">
+        YouTube 16:9
+      </button>
+
+      <button
+        class="formatBtn"
+        id="shortBtn"
+        onclick="setFormat('short')">
+        Shorts 9:16
+      </button>
+    </div>
+  </div>
+
+  <div class="card">
+
+    <h2>🖼️ Oyun Görseli</h2>
+
+    <label for="imageInput" class="upload">
+      <strong>+ Görsel Yükle</strong>
+      <small>Silah, karakter veya gameplay ekran görüntüsü</small>
+    </label>
+
+    <input
+      type="file"
+      id="imageInput"
+      accept="image/*">
+
+    <label>Kapak Yazısı</label>
+
+    <input
+      type="text"
+      id="titleInput"
+      placeholder="Örn: 1 V 4!">
+
+    <label>İçerik</label>
+
+    <select id="mode">
+      <option>Search & Destroy</option>
+      <option>Battle Royale</option>
+      <option>Ranked Gameplay</option>
+      <option>Weapon Build</option>
+      <option>1 V 4 Clutch</option>
+      <option>High Kill Gameplay</option>
+    </select>
+
+    <label>Tasarım Stili</label>
+
+    <select id="styleSelect">
+      <option value="yellow">Sarı / Siyah</option>
+      <option value="red">Kırmızı / Siyah</option>
+      <option value="cyan">Mavi / Neon</option>
+      <option value="orange">Turuncu / Ateş</option>
+      <option value="green">Yeşil / Askeri</option>
+    </select>
+
+    <button class="generate" onclick="createThumbnail()">
+      ⚡ KAPAĞI HAZIRLA
+    </button>
+
+  </div>
+
+  <div class="card">
+
+    <div class="previewTitle">
+      Ön İzleme
+    </div>
+
+    <div class="previewWrap" id="previewWrap">
+
+      <div class="emptyText" id="emptyText">
+        Görselini yükle ve kapak yazısını gir.
+      </div>
+
+      <img id="previewImage">
+
+      <div class="overlay">
+        <div id="previewText"></div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="footer">
+    CrazyTurkCodM • Thumbnail Studio
+  </div>
+
+</div>
+
+<script>
+
+  let format = "youtube";
+
+  const imageInput =
+    document.getElementById("imageInput");
+
+  const previewImage =
+    document.getElementById("previewImage");
+
+  const previewText =
+    document.getElementById("previewText");
+
+  const emptyText =
+    document.getElementById("emptyText");
+
+  const previewWrap =
+    document.getElementById("previewWrap");
+
+
+  imageInput.addEventListener("change", function(event) {
+
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+
+      previewImage.src = e.target.result;
+
+      previewImage.style.display = "block";
+
+      emptyText.style.display = "none";
+
+    };
+
+    reader.readAsDataURL(file);
+
+  });
+
+
+  function setFormat(type) {
+
+    format = type;
+
+    document
+      .getElementById("youtubeBtn")
+      .classList.remove("active");
+
+    document
+      .getElementById("shortBtn")
+      .classList.remove("active");
+
+
+    if (type === "youtube") {
+
+      document
+        .getElementById("youtubeBtn")
+        .classList.add("active");
+
+      previewWrap.classList.remove("short");
+
+    } else {
+
+      document
+        .getElementById("shortBtn")
+        .classList.add("active");
+
+      previewWrap.classList.add("short");
+
+    }
+
+  }
+
+
+  function createThumbnail() {
+
+    const title =
+      document
+        .getElementById("titleInput")
+        .value.trim();
+
+    const style =
+      document
+        .getElementById("styleSelect")
+        .value;
+
+
+    previewText.innerText =
+      title || "CRAZYTURK CODM";
+
+
+    const colors = {
+
+      yellow: "#ffd400",
+
+      red: "#ff3030",
+
+      cyan: "#00eaff",
+
+      orange: "#ff8a00",
+
+      green: "#7dff63"
+
+    };
+
+
+    previewText.style.color =
+      colors[style];
+
+
+    previewWrap.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+  }
+
+</script>
+
+</body>
+</html>
