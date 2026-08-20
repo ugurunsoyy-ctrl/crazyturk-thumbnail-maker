@@ -2,638 +2,437 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta name="theme-color" content="#070b14">
-<title>CrazyTurk Thumbnail Studio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b12">
+<title>CrazyTurk Prompt Studio</title>
 
 <style>
 *{box-sizing:border-box}
 body{
   margin:0;
-  font-family:Arial,Helvetica,sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
   background:
-    radial-gradient(circle at top,#18233b 0,#090e19 40%,#030509 100%);
+    radial-gradient(circle at top,#172039 0%,#090d17 40%,#05070c 100%);
   color:#fff;
   min-height:100vh;
 }
 .container{
-  width:min(94%,760px);
+  width:min(94%,720px);
   margin:auto;
-  padding:28px 0 60px;
+  padding:35px 0 60px;
 }
 .logo{
   text-align:center;
-  font-size:35px;
+  font-size:36px;
   font-weight:900;
   letter-spacing:-1px;
 }
 .logo span{color:#ffc400}
 .subtitle{
   text-align:center;
-  color:#9ca5b7;
-  margin:8px 0 30px;
-  font-size:17px;
+  color:#9ca5b8;
+  margin:6px 0 30px;
+  font-size:16px;
 }
+.badge{
+  display:inline-block;
+  padding:6px 12px;
+  border-radius:20px;
+  background:#182238;
+  color:#ffd333;
+  font-size:12px;
+  font-weight:800;
+  margin-top:10px;
+}
+.center{text-align:center}
+
 .card{
-  background:rgba(17,24,38,.94);
-  border:1px solid #303a51;
+  background:rgba(18,24,38,.96);
+  border:1px solid #2b354c;
   border-radius:25px;
-  padding:22px;
-  margin-bottom:20px;
-  box-shadow:0 15px 45px rgba(0,0,0,.25);
+  padding:24px;
+  margin-bottom:18px;
+  box-shadow:0 15px 35px rgba(0,0,0,.25);
 }
-h2{
+.card h2{
   margin:0 0 20px;
-  font-size:22px;
+  font-size:21px;
 }
 label{
   display:block;
-  color:#b7bfce;
+  color:#aeb6c8;
   margin:18px 0 8px;
-  font-size:15px;
+  font-size:14px;
 }
-.row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-button,.option{
+input,select,textarea{
   width:100%;
-  min-height:58px;
-  border-radius:17px;
-  border:1px solid #39445c;
-  background:#0b101d;
-  color:white;
-  font-size:17px;
-  font-weight:800;
-}
-.option.active{
-  background:linear-gradient(135deg,#ffb800,#ffe56b);
-  color:#090909;
-  border:none;
-}
-.upload{
-  border:2px dashed #46516a;
-  border-radius:20px;
-  padding:28px 15px;
-  text-align:center;
-  cursor:pointer;
-  color:#c1c8d6;
-}
-.upload strong{
-  font-size:20px;
-  display:block;
-  margin-bottom:7px;
-}
-.upload small{color:#858fa3}
-input[type=file]{display:none}
-input[type=text],select{
-  width:100%;
-  padding:17px;
-  border-radius:16px;
-  border:1px solid #39445c;
-  background:#090e1a;
-  color:white;
-  font-size:17px;
+  background:#0c111d;
+  color:#fff;
+  border:1px solid #39435b;
+  border-radius:15px;
+  padding:15px;
+  font-size:16px;
   outline:none;
 }
-.rangeWrap{
-  display:grid;
-  grid-template-columns:1fr 70px;
-  gap:12px;
-  align-items:center;
+textarea{
+  resize:vertical;
+  min-height:90px;
 }
-input[type=range]{width:100%}
-.value{
-  background:#090e1a;
-  border:1px solid #39445c;
-  border-radius:12px;
-  padding:10px;
-  text-align:center;
+input:focus,select:focus,textarea:focus{
+  border-color:#ffc400;
+}
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.choice{
+  background:#0c111d;
+  border:1px solid #39435b;
+  color:#fff;
+  padding:16px 8px;
+  border-radius:15px;
+  font-size:15px;
+  font-weight:800;
+  cursor:pointer;
+}
+.choice.active{
+  background:linear-gradient(135deg,#ffae00,#ffe55c);
+  color:#080808;
+  border-color:#ffc400;
 }
 .generate{
-  margin-top:23px;
-  min-height:68px;
-  border:0;
-  color:#080808;
-  font-size:21px;
-  background:linear-gradient(90deg,#ffae00,#ffe765);
-  box-shadow:0 10px 30px rgba(255,190,0,.18);
-}
-canvas{
   width:100%;
-  display:block;
+  border:0;
   border-radius:18px;
-  background:#000;
+  padding:19px 12px;
+  margin-top:24px;
+  background:linear-gradient(90deg,#ffae00,#ffe55c);
+  color:#080808;
+  font-weight:950;
+  font-size:19px;
+  cursor:pointer;
 }
-.previewBox{
-  overflow:hidden;
-  border-radius:20px;
+.copy{
+  width:100%;
+  border:0;
+  border-radius:18px;
+  padding:18px 12px;
+  margin-top:14px;
+  background:linear-gradient(90deg,#00d47b,#72f2af);
+  color:#04130d;
+  font-weight:950;
+  font-size:18px;
+  cursor:pointer;
 }
-.download{
-  display:none;
-  margin-top:17px;
-  background:linear-gradient(90deg,#12d879,#7dffbd);
-  color:#03130a;
-  border:none;
+.output{
+  white-space:pre-wrap;
+  line-height:1.55;
+  background:#080c14;
+  border:1px solid #343f58;
+  padding:18px;
+  border-radius:17px;
+  color:#e8ecf5;
+  font-size:14px;
+  min-height:150px;
 }
-.note{
-  color:#8d97aa;
+.tip{
+  margin-top:15px;
+  padding:14px;
+  background:#10192b;
+  border-left:4px solid #ffc400;
+  border-radius:10px;
+  color:#b8c0d1;
   font-size:13px;
   line-height:1.5;
-  margin-top:14px;
 }
-.colors{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:9px;
-}
-.color{
-  height:49px;
-  border-radius:14px;
-  border:2px solid transparent;
-}
-.color.active{border:3px solid white}
-.red{background:linear-gradient(135deg,#ff2020,#750000)}
-.yellow{background:linear-gradient(135deg,#ffd600,#ff7200)}
-.blue{background:linear-gradient(135deg,#00b7ff,#183cff)}
-.purple{background:linear-gradient(135deg,#e72bff,#5716ff)}
 .footer{
   text-align:center;
-  color:#5f6879;
-  font-size:13px;
+  color:#626b7c;
   margin-top:25px;
+  font-size:13px;
+}
+@media(max-width:450px){
+  .container{width:92%}
+  .logo{font-size:31px}
+  .card{padding:20px}
 }
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
-<div class="logo">CRAZY<span>TURK</span></div>
-<div class="subtitle">CODM Thumbnail Studio</div>
+  <div class="center">
+    <div class="logo">CRAZY<span>TURK</span></div>
+    <div class="subtitle">AI Thumbnail Prompt Studio</div>
+    <div class="badge">⚡ ChatGPT İçin Profesyonel Prompt Üretici</div>
+  </div>
 
-<div class="card">
-<h2>🎮 Kapak Türü</h2>
+  <div class="card">
+    <h2>🎮 Kapak Ayarları</h2>
 
-<div class="row">
-<button id="youtube" class="option active">YouTube 16:9</button>
-<button id="shorts" class="option">Shorts 9:16</button>
-</div>
-</div>
+    <label>Kapak Türü</label>
+    <div class="grid">
+      <button class="choice active" id="youtubeBtn"
+        onclick="setFormat('16:9',this)">▶ YouTube 16:9</button>
 
-<div class="card">
-<h2>🖼️ Oyun Görseli</h2>
+      <button class="choice" id="shortBtn"
+        onclick="setFormat('9:16',this)">📱 Shorts 9:16</button>
+    </div>
 
-<label class="upload" for="imageInput">
-<strong>＋ Görsel Yükle</strong>
-<small>Silah, karakter veya gameplay ekran görüntüsü</small>
-</label>
+    <label>Video Konusu</label>
+    <input id="topic"
+      placeholder="Örn: Doğru silah dizmenin 6 kuralı">
 
-<input id="imageInput" type="file" accept="image/*">
+    <label>Kapakta Yazacak Ana Yazı</label>
+    <input id="headline"
+      placeholder="Örn: 6 ALTIN KURAL!">
 
-<label>Kapak Yazısı</label>
-<input id="title" type="text" value="1 V 4!" placeholder="Örn: 1 V 4!">
+    <label>İkinci Yazı (isteğe bağlı)</label>
+    <input id="subheadline"
+      placeholder="Örn: SİLAHINI BÖYLE DİZ!">
 
-<label>Alt Yazı</label>
-<input id="subtitleText" type="text" placeholder="Örn: TEK BAŞIMA YARGI!">
+    <label>İçerik Türü</label>
+    <select id="content">
+      <option>Call of Duty Mobile</option>
+      <option>Ranked Multiplayer</option>
+      <option>Search & Destroy</option>
+      <option>Battle Royale</option>
+      <option>Silah / Gunsmith</option>
+      <option>Mitik Silah</option>
+      <option>Mitik Karakter</option>
+      <option>1 V 4 / Clutch</option>
+      <option>Komik / Eğlenceli</option>
+      <option>Rehber / Bilgi</option>
+      <option>Güncelleme / Haber</option>
+    </select>
 
-<label>Tasarım Rengi</label>
+    <label>Tasarım Stili</label>
+    <select id="style">
+      <option>Profesyonel CODM / Sinematik</option>
+      <option>Agresif Kırmızı / Siyah</option>
+      <option>Sarı / Siyah Yüksek CTR</option>
+      <option>Mavi / Mor Mitik</option>
+      <option>Ateş / Patlama</option>
+      <option>Neon / Cyberpunk</option>
+      <option>Karanlık / Gizemli</option>
+      <option>Temiz / Profesyonel</option>
+    </select>
 
-<div class="colors">
-<button class="color red active" data-color="red"></button>
-<button class="color yellow" data-color="yellow"></button>
-<button class="color blue" data-color="blue"></button>
-<button class="color purple" data-color="purple"></button>
-</div>
+    <label>Ana Odak</label>
+    <select id="focus">
+      <option>Yüklediğim görseldeki silah</option>
+      <option>Yüklediğim görseldeki karakter</option>
+      <option>Silah + karakter</option>
+      <option>Gameplay sahnesi</option>
+      <option>Yazı + oyun sahnesi</option>
+    </select>
 
-<label>Görsel Yakınlaştırma</label>
-<div class="rangeWrap">
-<input id="zoom" type="range" min="100" max="220" value="115">
-<div id="zoomValue" class="value">115%</div>
-</div>
+    <label>Ek İstek (isteğe bağlı)</label>
+    <textarea id="extra"
+      placeholder="Örn: Silah çok büyük görünsün, arka planda patlama olsun, yazı üst tarafta olsun..."></textarea>
 
-<label>Görsel Yatay Konum</label>
-<div class="rangeWrap">
-<input id="posX" type="range" min="-100" max="100" value="0">
-<div id="xValue" class="value">0</div>
-</div>
+    <button class="generate" onclick="generatePrompt()">
+      ⚡ PROFESYONEL PROMPT HAZIRLA
+    </button>
+  </div>
 
-<label>Görsel Dikey Konum</label>
-<div class="rangeWrap">
-<input id="posY" type="range" min="-100" max="100" value="0">
-<div id="yValue" class="value">0</div>
-</div>
+  <div class="card">
+    <h2>🤖 ChatGPT Promptu</h2>
 
-<button id="generate" class="generate">⚡ KAPAĞI HAZIRLA</button>
+    <div id="output" class="output">
+Ayarları doldur ve “Profesyonel Prompt Hazırla” butonuna bas.
+    </div>
 
-<p class="note">
-Görsel tamamen telefonunda işlenir. Sunucuya yüklenmez.
-</p>
+    <button class="copy" onclick="copyPrompt()">
+      📋 PROMPTU KOPYALA
+    </button>
 
-</div>
+    <div class="tip">
+      <b>Kullanım:</b><br>
+      1. Promptu hazırla.<br>
+      2. “Promptu Kopyala” butonuna bas.<br>
+      3. ChatGPT uygulamasını aç.<br>
+      4. Kullanmak istediğin CODM ekran görüntüsünü yükle.<br>
+      5. Promptu yapıştır ve gönder.
+    </div>
+  </div>
 
-<div class="card">
-
-<h2>👀 Ön İzleme</h2>
-
-<div class="previewBox">
-<canvas id="canvas"></canvas>
-</div>
-
-<button id="download" class="download">
-⬇️ PNG OLARAK KAYDET
-</button>
-
-</div>
-
-<div class="footer">
-CrazyTurkCodM • Thumbnail Studio
-</div>
+  <div class="footer">
+    CrazyTurkCodM • AI Thumbnail Prompt Studio
+  </div>
 
 </div>
 
 <script>
+let format = "16:9";
 
-const canvas=document.getElementById("canvas");
-const ctx=canvas.getContext("2d");
+function setFormat(value, button){
+  format = value;
 
-const imageInput=document.getElementById("imageInput");
-const title=document.getElementById("title");
-const subtitleText=document.getElementById("subtitleText");
+  document.querySelectorAll(".choice")
+    .forEach(b => b.classList.remove("active"));
 
-const youtube=document.getElementById("youtube");
-const shorts=document.getElementById("shorts");
-
-const zoom=document.getElementById("zoom");
-const posX=document.getElementById("posX");
-const posY=document.getElementById("posY");
-
-const zoomValue=document.getElementById("zoomValue");
-const xValue=document.getElementById("xValue");
-const yValue=document.getElementById("yValue");
-
-let mode="youtube";
-let img=null;
-let theme="red";
-
-const themes={
- red:{
-  main:"#ff2424",
-  glow:"#ff0000"
- },
- yellow:{
-  main:"#ffd21a",
-  glow:"#ff8700"
- },
- blue:{
-  main:"#24c8ff",
-  glow:"#005cff"
- },
- purple:{
-  main:"#d93cff",
-  glow:"#691cff"
- }
-};
-
-youtube.onclick=()=>{
- mode="youtube";
- youtube.classList.add("active");
- shorts.classList.remove("active");
- draw();
-};
-
-shorts.onclick=()=>{
- mode="shorts";
- shorts.classList.add("active");
- youtube.classList.remove("active");
- draw();
-};
-
-document.querySelectorAll(".color").forEach(btn=>{
- btn.onclick=()=>{
-  document.querySelectorAll(".color").forEach(x=>x.classList.remove("active"));
-  btn.classList.add("active");
-  theme=btn.dataset.color;
-  draw();
- };
-});
-
-imageInput.onchange=e=>{
- const file=e.target.files[0];
- if(!file)return;
-
- const reader=new FileReader();
-
- reader.onload=event=>{
-  img=new Image();
-
-  img.onload=()=>{
-   draw();
-  };
-
-  img.src=event.target.result;
- };
-
- reader.readAsDataURL(file);
-};
-
-zoom.oninput=()=>{
- zoomValue.textContent=zoom.value+"%";
- draw();
-};
-
-posX.oninput=()=>{
- xValue.textContent=posX.value;
- draw();
-};
-
-posY.oninput=()=>{
- yValue.textContent=posY.value;
- draw();
-};
-
-title.oninput=draw;
-subtitleText.oninput=draw;
-
-function setupCanvas(){
-
- if(mode==="youtube"){
-  canvas.width=1280;
-  canvas.height=720;
- }else{
-  canvas.width=1080;
-  canvas.height=1920;
- }
-
+  button.classList.add("active");
 }
 
-function drawImageCover(){
+function generatePrompt(){
 
- if(!img)return;
+  const topic =
+    document.getElementById("topic").value.trim()
+    || "Call of Duty Mobile videosu";
 
- const scaleBase=Math.max(
-  canvas.width/img.width,
-  canvas.height/img.height
- );
+  const headline =
+    document.getElementById("headline").value.trim()
+    || "EFSANE MAÇ!";
 
- const scale=
- scaleBase*(Number(zoom.value)/100);
+  const subheadline =
+    document.getElementById("subheadline").value.trim();
 
- const w=img.width*scale;
- const h=img.height*scale;
+  const content =
+    document.getElementById("content").value;
 
- const offsetX=(Number(posX.value)/100)*(canvas.width*.30);
- const offsetY=(Number(posY.value)/100)*(canvas.height*.30);
+  const style =
+    document.getElementById("style").value;
 
- const x=(canvas.width-w)/2+offsetX;
- const y=(canvas.height-h)/2+offsetY;
+  const focus =
+    document.getElementById("focus").value;
 
- ctx.drawImage(img,x,y,w,h);
+  const extra =
+    document.getElementById("extra").value.trim();
 
+  const orientation =
+    format === "9:16"
+    ? "dikey 9:16 YouTube Shorts kapağı"
+    : "yatay 16:9 YouTube thumbnail";
+
+  let prompt = `Yüklediğim Call of Duty Mobile görselini referans olarak kullanarak profesyonel bir ${orientation} oluştur.
+
+Bu görsel CrazyTurkCodM YouTube kanalı için hazırlanacak.
+
+VİDEO KONUSU:
+${topic}
+
+İÇERİK:
+${content}
+
+TASARIM STİLİ:
+${style}
+
+ANA ODAK:
+${focus}
+
+KAPAKTAKİ ANA YAZI:
+"${headline}"
+`;
+
+  if(subheadline){
+    prompt += `
+
+İKİNCİ YAZI:
+"${subheadline}"
+`;
+  }
+
+  prompt += `
+
+TASARIM TALİMATLARI:
+
+Yüklediğim CODM görselindeki ana silahı veya karakteri mümkün olduğunca doğru koru. Ana objeyi net biçimde ayır ve profesyonel oyun thumbnail kompozisyonuna dönüştür.
+
+Görsel sıradan bir ekran görüntüsü gibi görünmemeli. Yüksek kaliteli, sinematik, profesyonel ve güçlü bir YouTube gaming thumbnail görünümüne sahip olmalı.
+
+Ana objeyi büyük, keskin ve dikkat çekici kullan. Gerekiyorsa arka planı yeniden düzenle, karart, blur uygula veya sinematik bir savaş atmosferine dönüştür.
+
+Işıklandırmayı dramatik hale getir. Rim light, glow, volumetric lighting, atmosferik ışık, parçacıklar, kıvılcımlar ve kontrollü enerji efektleri kullanılabilir.
+
+Renk kontrastı mobil ekranda güçlü görünmeli.
+
+Ana yazı çok büyük, kalın, kısa ve ilk bakışta okunabilir olmalı. Yazıya güçlü outline, gölge ve gerektiğinde hafif glow uygula.
+
+Yazıyı ana silahın veya karakterin yüzünün üzerine bindirme.
+
+Kompozisyon YouTube'da küçük thumbnail boyutunda bile anlaşılır olmalı.
+
+Gereksiz küçük yazılar, sahte oyun arayüzleri, anlamsız semboller, bozuk harfler ve karmaşık detaylar ekleme.
+
+Call of Duty Mobile atmosferini koru ancak görseli profesyonel bir içerik üreticisinin yüksek CTR thumbnail tasarımı seviyesine yükselt.
+
+ÖNEMLİ:
+Kapakta yazılması istenen Türkçe metni harf hatası yapmadan AYNEN yaz:
+"${headline}"`;
+
+  if(subheadline){
+    prompt += `
+İkinci metni de aynen yaz:
+"${subheadline}"`;
+  }
+
+  if(format === "9:16"){
+    prompt += `
+
+Bu bir Shorts kapağıdır. Tasarım kesinlikle 9:16 dikey kompozisyona göre hazırlanmalı. Ana obje ve yazılar ekranın merkez/güvenli bölgesinde güçlü görünmeli.`;
+  }else{
+    prompt += `
+
+Bu bir normal YouTube videosu kapağıdır. Tasarım kesinlikle 16:9 yatay thumbnail kompozisyonunda hazırlanmalı.`;
+  }
+
+  if(extra){
+    prompt += `
+
+EK ÖZEL İSTEK:
+${extra}`;
+  }
+
+  prompt += `
+
+Sonuçta yalnızca tamamlanmış profesyonel kapak görselini oluştur.`;
+
+  document.getElementById("output").textContent = prompt;
+
+  document.getElementById("output")
+    .scrollIntoView({behavior:"smooth",block:"center"});
 }
 
-function addEffects(){
+async function copyPrompt(){
 
- const t=themes[theme];
+  const text =
+    document.getElementById("output").textContent;
 
- const gradient=ctx.createLinearGradient(
- 0,0,0,canvas.height
- );
+  try{
+    await navigator.clipboard.writeText(text);
 
- gradient.addColorStop(0,"rgba(0,0,0,.05)");
- gradient.addColorStop(.52,"rgba(0,0,0,.05)");
- gradient.addColorStop(1,"rgba(0,0,0,.82)");
+    const button =
+      document.querySelector(".copy");
 
- ctx.fillStyle=gradient;
- ctx.fillRect(0,0,canvas.width,canvas.height);
+    const old = button.innerHTML;
 
- const glow=ctx.createRadialGradient(
- canvas.width*.5,
- canvas.height*.48,
- 10,
- canvas.width*.5,
- canvas.height*.48,
- canvas.width*.7
- );
+    button.innerHTML = "✅ KOPYALANDI!";
 
- glow.addColorStop(0,t.glow+"44");
- glow.addColorStop(1,"rgba(0,0,0,0)");
+    setTimeout(()=>{
+      button.innerHTML = old;
+    },1800);
 
- ctx.fillStyle=glow;
- ctx.fillRect(0,0,canvas.width,canvas.height);
+  }catch(e){
 
- ctx.fillStyle=t.main;
- ctx.fillRect(
- 0,
- canvas.height-18,
- canvas.width,
- 18
- );
+    const area =
+      document.createElement("textarea");
 
+    area.value = text;
+
+    document.body.appendChild(area);
+
+    area.select();
+
+    document.execCommand("copy");
+
+    area.remove();
+
+    alert("Prompt kopyalandı!");
+  }
 }
-
-function fitFont(text,maxWidth,startSize){
-
- let size=startSize;
-
- while(size>30){
-
-  ctx.font=`900 ${size}px Arial`;
-
-  if(ctx.measureText(text).width<=maxWidth)
-   break;
-
-  size-=4;
- }
-
- return size;
-}
-
-function drawText(){
-
- const t=themes[theme];
-
- let main=title.value.trim();
- let sub=subtitleText.value.trim();
-
- if(!main)main="1 V 4!";
-
- let maxWidth;
- let fontSize;
- let y;
-
- if(mode==="youtube"){
-
-  maxWidth=canvas.width*.88;
-  fontSize=fitFont(main,maxWidth,135);
-  y=canvas.height*.77;
-
- }else{
-
-  maxWidth=canvas.width*.86;
-  fontSize=fitFont(main,maxWidth,155);
-  y=canvas.height*.77;
-
- }
-
- ctx.textAlign="center";
- ctx.textBaseline="middle";
-
- ctx.font=`900 ${fontSize}px Arial`;
-
- ctx.lineWidth=Math.max(9,fontSize*.10);
- ctx.strokeStyle="#000";
-
- ctx.shadowColor="#000";
- ctx.shadowBlur=18;
-
- ctx.strokeText(
- main,
- canvas.width/2,
- y
- );
-
- ctx.fillStyle=t.main;
-
- ctx.shadowColor=t.glow;
- ctx.shadowBlur=35;
-
- ctx.fillText(
- main,
- canvas.width/2,
- y
- );
-
- ctx.shadowBlur=0;
-
- if(sub){
-
-  let subSize=
-  mode==="youtube"?55:62;
-
-  subSize=fitFont(
-   sub,
-   canvas.width*.82,
-   subSize
-  );
-
-  const subY=y+fontSize*.82;
-
-  ctx.font=`900 ${subSize}px Arial`;
-
-  ctx.lineWidth=8;
-  ctx.strokeStyle="#000";
-  ctx.strokeText(
-   sub,
-   canvas.width/2,
-   subY
-  );
-
-  ctx.fillStyle="#fff";
-  ctx.fillText(
-   sub,
-   canvas.width/2,
-   subY
-  );
-
- }
-
-}
-
-function placeholder(){
-
- const grad=ctx.createLinearGradient(
- 0,0,
- canvas.width,
- canvas.height
- );
-
- grad.addColorStop(0,"#141c2e");
- grad.addColorStop(1,"#05070c");
-
- ctx.fillStyle=grad;
- ctx.fillRect(
- 0,0,
- canvas.width,
- canvas.height
- );
-
- ctx.textAlign="center";
- ctx.fillStyle="#677188";
-
- ctx.font=
- mode==="youtube"
- ? "bold 45px Arial"
- : "bold 58px Arial";
-
- ctx.fillText(
- "CODM GÖRSELİ YÜKLE",
- canvas.width/2,
- canvas.height/2
- );
-
-}
-
-function draw(){
-
- setupCanvas();
-
- ctx.clearRect(
- 0,0,
- canvas.width,
- canvas.height
- );
-
- if(img){
-  drawImageCover();
- }else{
-  placeholder();
- }
-
- addEffects();
- drawText();
-
-}
-
-document.getElementById("generate").onclick=()=>{
-
- if(!img){
-  alert("Önce bir oyun görseli yükle.");
-  return;
- }
-
- draw();
-
- document.getElementById("download").style.display="block";
-
- canvas.scrollIntoView({
-  behavior:"smooth",
-  block:"center"
- });
-
-};
-
-document.getElementById("download").onclick=()=>{
-
- draw();
-
- const link=document.createElement("a");
-
- link.download=
- mode==="youtube"
- ? "CrazyTurk-YouTube-Thumbnail.png"
- : "CrazyTurk-Shorts-Cover.png";
-
- link.href=canvas.toDataURL("image/png");
-
- link.click();
-
-};
-
-draw();
-
 </script>
 
 </body>
