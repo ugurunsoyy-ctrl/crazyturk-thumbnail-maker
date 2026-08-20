@@ -1,448 +1,638 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080b12">
-  <title>CrazyTurk Thumbnail Maker</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#070b14">
+<title>CrazyTurk Thumbnail Studio</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background:
-        radial-gradient(circle at top, #18213a 0%, #090c14 42%, #050608 100%);
-      color: white;
-      min-height: 100vh;
-    }
-
-    .app {
-      width: 100%;
-      max-width: 600px;
-      margin: auto;
-      padding: 22px 16px 50px;
-    }
-
-    .logo {
-      text-align: center;
-      margin-bottom: 25px;
-    }
-
-    .logo h1 {
-      margin: 0;
-      font-size: 27px;
-      font-weight: 900;
-      letter-spacing: -1px;
-    }
-
-    .logo span {
-      color: #ffc400;
-    }
-
-    .logo p {
-      color: #9ca3af;
-      margin: 7px 0 0;
-      font-size: 14px;
-    }
-
-    .card {
-      background: rgba(20, 25, 38, 0.94);
-      border: 1px solid #2b3243;
-      border-radius: 20px;
-      padding: 18px;
-      margin-bottom: 16px;
-      box-shadow: 0 12px 35px rgba(0,0,0,.25);
-    }
-
-    .card h2 {
-      font-size: 17px;
-      margin: 0 0 15px;
-    }
-
-    label {
-      display: block;
-      font-size: 13px;
-      color: #b7bdca;
-      margin: 15px 0 7px;
-    }
-
-    input,
-    select {
-      width: 100%;
-      padding: 14px;
-      border-radius: 12px;
-      border: 1px solid #353d50;
-      background: #0d111c;
-      color: white;
-      font-size: 16px;
-      outline: none;
-    }
-
-    input:focus,
-    select:focus {
-      border-color: #ffc400;
-    }
-
-    .upload {
-      border: 2px dashed #3b4355;
-      border-radius: 16px;
-      padding: 25px 12px;
-      text-align: center;
-      cursor: pointer;
-      background: #0d111b;
-    }
-
-    .upload strong {
-      display: block;
-      font-size: 17px;
-      margin-bottom: 5px;
-    }
-
-    .upload small {
-      color: #8e96a8;
-    }
-
-    #imageInput {
-      display: none;
-    }
-
-    .buttons {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .formatBtn {
-      padding: 14px 8px;
-      border-radius: 12px;
-      border: 1px solid #353d50;
-      background: #101522;
-      color: white;
-      font-weight: bold;
-      font-size: 14px;
-    }
-
-    .formatBtn.active {
-      background: #ffc400;
-      color: #090909;
-      border-color: #ffc400;
-    }
-
-    .generate {
-      width: 100%;
-      padding: 17px;
-      margin-top: 18px;
-      border: 0;
-      border-radius: 14px;
-      background: linear-gradient(90deg, #ffb800, #ffe259);
-      color: #080808;
-      font-size: 17px;
-      font-weight: 900;
-      cursor: pointer;
-    }
-
-    .previewTitle {
-      margin: 5px 0 12px;
-      font-size: 16px;
-    }
-
-    .previewWrap {
-      width: 100%;
-      background: #000;
-      border-radius: 15px;
-      overflow: hidden;
-      position: relative;
-      aspect-ratio: 16 / 9;
-    }
-
-    .previewWrap.short {
-      aspect-ratio: 9 / 16;
-      max-width: 300px;
-      margin: auto;
-    }
-
-    #previewImage {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: none;
-    }
-
-    .overlay {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: flex-end;
-      padding: 18px;
-      background:
-        linear-gradient(
-          to top,
-          rgba(0,0,0,.9),
-          rgba(0,0,0,.08) 65%
-        );
-    }
-
-    #previewText {
-      font-size: clamp(24px, 7vw, 45px);
-      line-height: .95;
-      font-weight: 1000;
-      text-transform: uppercase;
-      text-shadow:
-        3px 3px 0 #000,
-        -2px -2px 0 #000,
-        0 4px 12px #000;
-      color: #ffd400;
-      max-width: 95%;
-    }
-
-    .emptyText {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #687083;
-      text-align: center;
-      padding: 30px;
-    }
-
-    .footer {
-      text-align: center;
-      color: #666e7d;
-      font-size: 12px;
-      margin-top: 25px;
-    }
-  </style>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:
+    radial-gradient(circle at top,#18233b 0,#090e19 40%,#030509 100%);
+  color:#fff;
+  min-height:100vh;
+}
+.container{
+  width:min(94%,760px);
+  margin:auto;
+  padding:28px 0 60px;
+}
+.logo{
+  text-align:center;
+  font-size:35px;
+  font-weight:900;
+  letter-spacing:-1px;
+}
+.logo span{color:#ffc400}
+.subtitle{
+  text-align:center;
+  color:#9ca5b7;
+  margin:8px 0 30px;
+  font-size:17px;
+}
+.card{
+  background:rgba(17,24,38,.94);
+  border:1px solid #303a51;
+  border-radius:25px;
+  padding:22px;
+  margin-bottom:20px;
+  box-shadow:0 15px 45px rgba(0,0,0,.25);
+}
+h2{
+  margin:0 0 20px;
+  font-size:22px;
+}
+label{
+  display:block;
+  color:#b7bfce;
+  margin:18px 0 8px;
+  font-size:15px;
+}
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+button,.option{
+  width:100%;
+  min-height:58px;
+  border-radius:17px;
+  border:1px solid #39445c;
+  background:#0b101d;
+  color:white;
+  font-size:17px;
+  font-weight:800;
+}
+.option.active{
+  background:linear-gradient(135deg,#ffb800,#ffe56b);
+  color:#090909;
+  border:none;
+}
+.upload{
+  border:2px dashed #46516a;
+  border-radius:20px;
+  padding:28px 15px;
+  text-align:center;
+  cursor:pointer;
+  color:#c1c8d6;
+}
+.upload strong{
+  font-size:20px;
+  display:block;
+  margin-bottom:7px;
+}
+.upload small{color:#858fa3}
+input[type=file]{display:none}
+input[type=text],select{
+  width:100%;
+  padding:17px;
+  border-radius:16px;
+  border:1px solid #39445c;
+  background:#090e1a;
+  color:white;
+  font-size:17px;
+  outline:none;
+}
+.rangeWrap{
+  display:grid;
+  grid-template-columns:1fr 70px;
+  gap:12px;
+  align-items:center;
+}
+input[type=range]{width:100%}
+.value{
+  background:#090e1a;
+  border:1px solid #39445c;
+  border-radius:12px;
+  padding:10px;
+  text-align:center;
+}
+.generate{
+  margin-top:23px;
+  min-height:68px;
+  border:0;
+  color:#080808;
+  font-size:21px;
+  background:linear-gradient(90deg,#ffae00,#ffe765);
+  box-shadow:0 10px 30px rgba(255,190,0,.18);
+}
+canvas{
+  width:100%;
+  display:block;
+  border-radius:18px;
+  background:#000;
+}
+.previewBox{
+  overflow:hidden;
+  border-radius:20px;
+}
+.download{
+  display:none;
+  margin-top:17px;
+  background:linear-gradient(90deg,#12d879,#7dffbd);
+  color:#03130a;
+  border:none;
+}
+.note{
+  color:#8d97aa;
+  font-size:13px;
+  line-height:1.5;
+  margin-top:14px;
+}
+.colors{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:9px;
+}
+.color{
+  height:49px;
+  border-radius:14px;
+  border:2px solid transparent;
+}
+.color.active{border:3px solid white}
+.red{background:linear-gradient(135deg,#ff2020,#750000)}
+.yellow{background:linear-gradient(135deg,#ffd600,#ff7200)}
+.blue{background:linear-gradient(135deg,#00b7ff,#183cff)}
+.purple{background:linear-gradient(135deg,#e72bff,#5716ff)}
+.footer{
+  text-align:center;
+  color:#5f6879;
+  font-size:13px;
+  margin-top:25px;
+}
+</style>
 </head>
 
 <body>
 
-<div class="app">
+<div class="container">
 
-  <div class="logo">
-    <h1>CRAZY<span>TURK</span></h1>
-    <p>CODM Thumbnail Studio</p>
-  </div>
+<div class="logo">CRAZY<span>TURK</span></div>
+<div class="subtitle">CODM Thumbnail Studio</div>
 
-  <div class="card">
-    <h2>🎮 Kapak Türü</h2>
+<div class="card">
+<h2>🎮 Kapak Türü</h2>
 
-    <div class="buttons">
-      <button
-        class="formatBtn active"
-        id="youtubeBtn"
-        onclick="setFormat('youtube')">
-        YouTube 16:9
-      </button>
+<div class="row">
+<button id="youtube" class="option active">YouTube 16:9</button>
+<button id="shorts" class="option">Shorts 9:16</button>
+</div>
+</div>
 
-      <button
-        class="formatBtn"
-        id="shortBtn"
-        onclick="setFormat('short')">
-        Shorts 9:16
-      </button>
-    </div>
-  </div>
+<div class="card">
+<h2>🖼️ Oyun Görseli</h2>
 
-  <div class="card">
+<label class="upload" for="imageInput">
+<strong>＋ Görsel Yükle</strong>
+<small>Silah, karakter veya gameplay ekran görüntüsü</small>
+</label>
 
-    <h2>🖼️ Oyun Görseli</h2>
+<input id="imageInput" type="file" accept="image/*">
 
-    <label for="imageInput" class="upload">
-      <strong>+ Görsel Yükle</strong>
-      <small>Silah, karakter veya gameplay ekran görüntüsü</small>
-    </label>
+<label>Kapak Yazısı</label>
+<input id="title" type="text" value="1 V 4!" placeholder="Örn: 1 V 4!">
 
-    <input
-      type="file"
-      id="imageInput"
-      accept="image/*">
+<label>Alt Yazı</label>
+<input id="subtitleText" type="text" placeholder="Örn: TEK BAŞIMA YARGI!">
 
-    <label>Kapak Yazısı</label>
+<label>Tasarım Rengi</label>
 
-    <input
-      type="text"
-      id="titleInput"
-      placeholder="Örn: 1 V 4!">
+<div class="colors">
+<button class="color red active" data-color="red"></button>
+<button class="color yellow" data-color="yellow"></button>
+<button class="color blue" data-color="blue"></button>
+<button class="color purple" data-color="purple"></button>
+</div>
 
-    <label>İçerik</label>
+<label>Görsel Yakınlaştırma</label>
+<div class="rangeWrap">
+<input id="zoom" type="range" min="100" max="220" value="115">
+<div id="zoomValue" class="value">115%</div>
+</div>
 
-    <select id="mode">
-      <option>Search & Destroy</option>
-      <option>Battle Royale</option>
-      <option>Ranked Gameplay</option>
-      <option>Weapon Build</option>
-      <option>1 V 4 Clutch</option>
-      <option>High Kill Gameplay</option>
-    </select>
+<label>Görsel Yatay Konum</label>
+<div class="rangeWrap">
+<input id="posX" type="range" min="-100" max="100" value="0">
+<div id="xValue" class="value">0</div>
+</div>
 
-    <label>Tasarım Stili</label>
+<label>Görsel Dikey Konum</label>
+<div class="rangeWrap">
+<input id="posY" type="range" min="-100" max="100" value="0">
+<div id="yValue" class="value">0</div>
+</div>
 
-    <select id="styleSelect">
-      <option value="yellow">Sarı / Siyah</option>
-      <option value="red">Kırmızı / Siyah</option>
-      <option value="cyan">Mavi / Neon</option>
-      <option value="orange">Turuncu / Ateş</option>
-      <option value="green">Yeşil / Askeri</option>
-    </select>
+<button id="generate" class="generate">⚡ KAPAĞI HAZIRLA</button>
 
-    <button class="generate" onclick="createThumbnail()">
-      ⚡ KAPAĞI HAZIRLA
-    </button>
+<p class="note">
+Görsel tamamen telefonunda işlenir. Sunucuya yüklenmez.
+</p>
 
-  </div>
+</div>
 
-  <div class="card">
+<div class="card">
 
-    <div class="previewTitle">
-      Ön İzleme
-    </div>
+<h2>👀 Ön İzleme</h2>
 
-    <div class="previewWrap" id="previewWrap">
+<div class="previewBox">
+<canvas id="canvas"></canvas>
+</div>
 
-      <div class="emptyText" id="emptyText">
-        Görselini yükle ve kapak yazısını gir.
-      </div>
+<button id="download" class="download">
+⬇️ PNG OLARAK KAYDET
+</button>
 
-      <img id="previewImage">
+</div>
 
-      <div class="overlay">
-        <div id="previewText"></div>
-      </div>
-
-    </div>
-
-  </div>
-
-  <div class="footer">
-    CrazyTurkCodM • Thumbnail Studio
-  </div>
+<div class="footer">
+CrazyTurkCodM • Thumbnail Studio
+</div>
 
 </div>
 
 <script>
 
-  let format = "youtube";
+const canvas=document.getElementById("canvas");
+const ctx=canvas.getContext("2d");
 
-  const imageInput =
-    document.getElementById("imageInput");
+const imageInput=document.getElementById("imageInput");
+const title=document.getElementById("title");
+const subtitleText=document.getElementById("subtitleText");
 
-  const previewImage =
-    document.getElementById("previewImage");
+const youtube=document.getElementById("youtube");
+const shorts=document.getElementById("shorts");
 
-  const previewText =
-    document.getElementById("previewText");
+const zoom=document.getElementById("zoom");
+const posX=document.getElementById("posX");
+const posY=document.getElementById("posY");
 
-  const emptyText =
-    document.getElementById("emptyText");
+const zoomValue=document.getElementById("zoomValue");
+const xValue=document.getElementById("xValue");
+const yValue=document.getElementById("yValue");
 
-  const previewWrap =
-    document.getElementById("previewWrap");
+let mode="youtube";
+let img=null;
+let theme="red";
 
+const themes={
+ red:{
+  main:"#ff2424",
+  glow:"#ff0000"
+ },
+ yellow:{
+  main:"#ffd21a",
+  glow:"#ff8700"
+ },
+ blue:{
+  main:"#24c8ff",
+  glow:"#005cff"
+ },
+ purple:{
+  main:"#d93cff",
+  glow:"#691cff"
+ }
+};
 
-  imageInput.addEventListener("change", function(event) {
+youtube.onclick=()=>{
+ mode="youtube";
+ youtube.classList.add("active");
+ shorts.classList.remove("active");
+ draw();
+};
 
-    const file = event.target.files[0];
+shorts.onclick=()=>{
+ mode="shorts";
+ shorts.classList.add("active");
+ youtube.classList.remove("active");
+ draw();
+};
 
-    if (!file) return;
+document.querySelectorAll(".color").forEach(btn=>{
+ btn.onclick=()=>{
+  document.querySelectorAll(".color").forEach(x=>x.classList.remove("active"));
+  btn.classList.add("active");
+  theme=btn.dataset.color;
+  draw();
+ };
+});
 
-    const reader = new FileReader();
+imageInput.onchange=e=>{
+ const file=e.target.files[0];
+ if(!file)return;
 
-    reader.onload = function(e) {
+ const reader=new FileReader();
 
-      previewImage.src = e.target.result;
+ reader.onload=event=>{
+  img=new Image();
 
-      previewImage.style.display = "block";
+  img.onload=()=>{
+   draw();
+  };
 
-      emptyText.style.display = "none";
+  img.src=event.target.result;
+ };
 
-    };
+ reader.readAsDataURL(file);
+};
 
-    reader.readAsDataURL(file);
+zoom.oninput=()=>{
+ zoomValue.textContent=zoom.value+"%";
+ draw();
+};
 
-  });
+posX.oninput=()=>{
+ xValue.textContent=posX.value;
+ draw();
+};
 
+posY.oninput=()=>{
+ yValue.textContent=posY.value;
+ draw();
+};
 
-  function setFormat(type) {
+title.oninput=draw;
+subtitleText.oninput=draw;
 
-    format = type;
+function setupCanvas(){
 
-    document
-      .getElementById("youtubeBtn")
-      .classList.remove("active");
+ if(mode==="youtube"){
+  canvas.width=1280;
+  canvas.height=720;
+ }else{
+  canvas.width=1080;
+  canvas.height=1920;
+ }
 
-    document
-      .getElementById("shortBtn")
-      .classList.remove("active");
+}
 
+function drawImageCover(){
 
-    if (type === "youtube") {
+ if(!img)return;
 
-      document
-        .getElementById("youtubeBtn")
-        .classList.add("active");
+ const scaleBase=Math.max(
+  canvas.width/img.width,
+  canvas.height/img.height
+ );
 
-      previewWrap.classList.remove("short");
+ const scale=
+ scaleBase*(Number(zoom.value)/100);
 
-    } else {
+ const w=img.width*scale;
+ const h=img.height*scale;
 
-      document
-        .getElementById("shortBtn")
-        .classList.add("active");
+ const offsetX=(Number(posX.value)/100)*(canvas.width*.30);
+ const offsetY=(Number(posY.value)/100)*(canvas.height*.30);
 
-      previewWrap.classList.add("short");
+ const x=(canvas.width-w)/2+offsetX;
+ const y=(canvas.height-h)/2+offsetY;
 
-    }
+ ctx.drawImage(img,x,y,w,h);
 
-  }
+}
 
+function addEffects(){
 
-  function createThumbnail() {
+ const t=themes[theme];
 
-    const title =
-      document
-        .getElementById("titleInput")
-        .value.trim();
+ const gradient=ctx.createLinearGradient(
+ 0,0,0,canvas.height
+ );
 
-    const style =
-      document
-        .getElementById("styleSelect")
-        .value;
+ gradient.addColorStop(0,"rgba(0,0,0,.05)");
+ gradient.addColorStop(.52,"rgba(0,0,0,.05)");
+ gradient.addColorStop(1,"rgba(0,0,0,.82)");
 
+ ctx.fillStyle=gradient;
+ ctx.fillRect(0,0,canvas.width,canvas.height);
 
-    previewText.innerText =
-      title || "CRAZYTURK CODM";
+ const glow=ctx.createRadialGradient(
+ canvas.width*.5,
+ canvas.height*.48,
+ 10,
+ canvas.width*.5,
+ canvas.height*.48,
+ canvas.width*.7
+ );
 
+ glow.addColorStop(0,t.glow+"44");
+ glow.addColorStop(1,"rgba(0,0,0,0)");
 
-    const colors = {
+ ctx.fillStyle=glow;
+ ctx.fillRect(0,0,canvas.width,canvas.height);
 
-      yellow: "#ffd400",
+ ctx.fillStyle=t.main;
+ ctx.fillRect(
+ 0,
+ canvas.height-18,
+ canvas.width,
+ 18
+ );
 
-      red: "#ff3030",
+}
 
-      cyan: "#00eaff",
+function fitFont(text,maxWidth,startSize){
 
-      orange: "#ff8a00",
+ let size=startSize;
 
-      green: "#7dff63"
+ while(size>30){
 
-    };
+  ctx.font=`900 ${size}px Arial`;
 
+  if(ctx.measureText(text).width<=maxWidth)
+   break;
 
-    previewText.style.color =
-      colors[style];
+  size-=4;
+ }
 
+ return size;
+}
 
-    previewWrap.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
-    });
+function drawText(){
 
-  }
+ const t=themes[theme];
+
+ let main=title.value.trim();
+ let sub=subtitleText.value.trim();
+
+ if(!main)main="1 V 4!";
+
+ let maxWidth;
+ let fontSize;
+ let y;
+
+ if(mode==="youtube"){
+
+  maxWidth=canvas.width*.88;
+  fontSize=fitFont(main,maxWidth,135);
+  y=canvas.height*.77;
+
+ }else{
+
+  maxWidth=canvas.width*.86;
+  fontSize=fitFont(main,maxWidth,155);
+  y=canvas.height*.77;
+
+ }
+
+ ctx.textAlign="center";
+ ctx.textBaseline="middle";
+
+ ctx.font=`900 ${fontSize}px Arial`;
+
+ ctx.lineWidth=Math.max(9,fontSize*.10);
+ ctx.strokeStyle="#000";
+
+ ctx.shadowColor="#000";
+ ctx.shadowBlur=18;
+
+ ctx.strokeText(
+ main,
+ canvas.width/2,
+ y
+ );
+
+ ctx.fillStyle=t.main;
+
+ ctx.shadowColor=t.glow;
+ ctx.shadowBlur=35;
+
+ ctx.fillText(
+ main,
+ canvas.width/2,
+ y
+ );
+
+ ctx.shadowBlur=0;
+
+ if(sub){
+
+  let subSize=
+  mode==="youtube"?55:62;
+
+  subSize=fitFont(
+   sub,
+   canvas.width*.82,
+   subSize
+  );
+
+  const subY=y+fontSize*.82;
+
+  ctx.font=`900 ${subSize}px Arial`;
+
+  ctx.lineWidth=8;
+  ctx.strokeStyle="#000";
+  ctx.strokeText(
+   sub,
+   canvas.width/2,
+   subY
+  );
+
+  ctx.fillStyle="#fff";
+  ctx.fillText(
+   sub,
+   canvas.width/2,
+   subY
+  );
+
+ }
+
+}
+
+function placeholder(){
+
+ const grad=ctx.createLinearGradient(
+ 0,0,
+ canvas.width,
+ canvas.height
+ );
+
+ grad.addColorStop(0,"#141c2e");
+ grad.addColorStop(1,"#05070c");
+
+ ctx.fillStyle=grad;
+ ctx.fillRect(
+ 0,0,
+ canvas.width,
+ canvas.height
+ );
+
+ ctx.textAlign="center";
+ ctx.fillStyle="#677188";
+
+ ctx.font=
+ mode==="youtube"
+ ? "bold 45px Arial"
+ : "bold 58px Arial";
+
+ ctx.fillText(
+ "CODM GÖRSELİ YÜKLE",
+ canvas.width/2,
+ canvas.height/2
+ );
+
+}
+
+function draw(){
+
+ setupCanvas();
+
+ ctx.clearRect(
+ 0,0,
+ canvas.width,
+ canvas.height
+ );
+
+ if(img){
+  drawImageCover();
+ }else{
+  placeholder();
+ }
+
+ addEffects();
+ drawText();
+
+}
+
+document.getElementById("generate").onclick=()=>{
+
+ if(!img){
+  alert("Önce bir oyun görseli yükle.");
+  return;
+ }
+
+ draw();
+
+ document.getElementById("download").style.display="block";
+
+ canvas.scrollIntoView({
+  behavior:"smooth",
+  block:"center"
+ });
+
+};
+
+document.getElementById("download").onclick=()=>{
+
+ draw();
+
+ const link=document.createElement("a");
+
+ link.download=
+ mode==="youtube"
+ ? "CrazyTurk-YouTube-Thumbnail.png"
+ : "CrazyTurk-Shorts-Cover.png";
+
+ link.href=canvas.toDataURL("image/png");
+
+ link.click();
+
+};
+
+draw();
 
 </script>
 
