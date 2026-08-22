@@ -2,213 +2,322 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta name="theme-color" content="#070A11">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b12">
 
-<title>CrazyTurk AI Thumbnail Studio</title>
+<title>CrazyTurkCodM Thumbnail Prompt Studio</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+    box-sizing:border-box;
+}
+
+:root{
+    --bg:#070910;
+    --panel:#111622;
+    --panel2:#0c111c;
+    --border:#283044;
+    --text:#ffffff;
+    --muted:#9ca5b8;
+    --yellow:#ffc400;
+    --yellow2:#ffe45c;
+    --green:#22e58b;
+    --blue:#4ea1ff;
+    --red:#ff4545;
+    --purple:#a855f7;
+}
 
 body{
-margin:0;
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-background:
-radial-gradient(circle at 50% -10%,#1c2b4c 0%,#0a0f1b 38%,#04060a 80%);
-color:#fff;
-min-height:100vh;
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:
+        radial-gradient(circle at top,#172037 0%,#090c15 42%,#05070c 100%);
+    color:var(--text);
+    min-height:100vh;
 }
 
 .container{
-width:min(94%,760px);
-margin:auto;
-padding:30px 0 70px;
-}
-
-.header{
-text-align:center;
-margin-bottom:28px;
+    width:min(760px,94%);
+    margin:auto;
+    padding:30px 0 70px;
 }
 
 .logo{
-font-size:36px;
-font-weight:950;
-letter-spacing:-1.5px;
+    text-align:center;
+    margin-bottom:28px;
 }
 
-.logo span{color:#ffc400}
-
-.subtitle{
-color:#9ca7ba;
-margin-top:5px;
+.logo h1{
+    margin:0;
+    font-size:38px;
+    letter-spacing:-1px;
 }
 
-.version{
-display:inline-block;
-margin-top:12px;
-padding:7px 13px;
-border-radius:50px;
-font-size:12px;
-font-weight:850;
-color:#ffd83d;
-background:#17213a;
-border:1px solid #2d3a58;
+.logo .turk{
+    color:var(--yellow);
+}
+
+.logo p{
+    color:var(--muted);
+    margin-top:8px;
+    font-size:15px;
+}
+
+.badge{
+    display:inline-block;
+    margin-top:10px;
+    background:#1a2130;
+    border:1px solid #343d52;
+    color:#d9e1ef;
+    border-radius:999px;
+    padding:7px 12px;
+    font-size:12px;
+    font-weight:700;
 }
 
 .card{
-background:rgba(17,23,36,.97);
-border:1px solid #2a354d;
-border-radius:24px;
-padding:22px;
-margin-bottom:17px;
-box-shadow:0 15px 40px rgba(0,0,0,.25);
+    background:rgba(17,22,34,.96);
+    border:1px solid var(--border);
+    border-radius:24px;
+    padding:24px;
+    margin-bottom:20px;
+    box-shadow:0 18px 50px rgba(0,0,0,.25);
 }
 
-.card-title{
-font-size:21px;
-font-weight:900;
-margin-bottom:18px;
+.card h2{
+    margin:0 0 20px;
+    font-size:22px;
 }
 
 label{
-display:block;
-margin:17px 0 8px;
-color:#aeb7c9;
-font-size:14px;
+    display:block;
+    margin:17px 0 8px;
+    color:#c4cada;
+    font-size:14px;
+    font-weight:700;
 }
 
 input,
-select,
-textarea{
-width:100%;
-border:1px solid #39445d;
-background:#0b101c;
-color:#fff;
-padding:15px;
-border-radius:14px;
-font-size:16px;
-outline:none;
-}
-
-textarea{
-min-height:95px;
-resize:vertical;
+textarea,
+select{
+    width:100%;
+    background:#0b101a;
+    color:white;
+    border:1px solid #30384d;
+    border-radius:15px;
+    padding:15px;
+    font-size:16px;
+    outline:none;
 }
 
 input:focus,
-select:focus,
-textarea:focus{
-border-color:#ffc400;
-box-shadow:0 0 0 2px rgba(255,196,0,.08);
+textarea:focus,
+select:focus{
+    border-color:var(--yellow);
+    box-shadow:0 0 0 3px rgba(255,196,0,.08);
 }
 
-.format-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
+textarea{
+    min-height:115px;
+    resize:vertical;
 }
 
-.format{
-border:1px solid #39445d;
-background:#0c111d;
-color:#fff;
-padding:17px 8px;
-border-radius:15px;
-font-size:15px;
-font-weight:850;
+small{
+    display:block;
+    margin-top:7px;
+    color:#80899d;
+    line-height:1.45;
 }
 
-.format.active{
-background:linear-gradient(135deg,#ffad00,#ffe45d);
-color:#080808;
-border-color:#ffc400;
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
 }
 
-.info{
-margin-top:12px;
-padding:14px;
-border-radius:13px;
-background:#101a2d;
-border-left:4px solid #ffc400;
-color:#aeb8ca;
-font-size:13px;
-line-height:1.55;
+.type-buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
 }
 
-.ai-info{
-border-left-color:#a868ff;
+.type-btn{
+    padding:17px 10px;
+    border-radius:15px;
+    border:1px solid #333b50;
+    background:#0c111c;
+    color:white;
+    font-size:16px;
+    font-weight:800;
+    cursor:pointer;
 }
 
-.green-info{
-border-left-color:#12dd85;
+.type-btn.active{
+    background:linear-gradient(135deg,var(--yellow),var(--yellow2));
+    color:#080808;
+    border-color:transparent;
 }
 
-.new{
-color:#ffc400;
-font-size:11px;
-font-weight:950;
+.upload{
+    border:2px dashed #343d53;
+    border-radius:18px;
+    padding:24px;
+    text-align:center;
+    background:#0a0f19;
 }
 
-.generate{
-width:100%;
-border:0;
-border-radius:18px;
-padding:19px 10px;
-margin-top:22px;
-font-size:19px;
-font-weight:950;
-color:#070707;
-background:linear-gradient(90deg,#ffae00,#ffd632,#fff073);
-box-shadow:0 8px 25px rgba(255,190,0,.18);
+.upload input{
+    margin-top:12px;
 }
 
-.generate:active{
-transform:scale(.985);
+.preview-images{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    margin-top:14px;
+}
+
+.preview-images img{
+    width:100%;
+    max-height:220px;
+    object-fit:cover;
+    border-radius:13px;
+    border:1px solid #31394d;
+}
+
+.reference-box{
+    margin-top:15px;
+    background:#090e17;
+    border:1px solid #293247;
+    border-radius:18px;
+    overflow:hidden;
+    display:none;
+}
+
+.reference-box img{
+    display:block;
+    width:100%;
+    aspect-ratio:16/9;
+    object-fit:cover;
+}
+
+.reference-info{
+    padding:13px 15px;
+}
+
+.reference-info strong{
+    display:block;
+    margin-bottom:5px;
+}
+
+.reference-info span{
+    color:#8993a8;
+    font-size:13px;
+}
+
+.check-row{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    background:#0a0f19;
+    border:1px solid #2b3346;
+    padding:13px;
+    border-radius:14px;
+    margin-top:12px;
+}
+
+.check-row input{
+    width:auto;
+    margin-top:2px;
+}
+
+.check-row label{
+    margin:0;
+    font-weight:normal;
+    line-height:1.45;
+}
+
+button.main{
+    width:100%;
+    border:0;
+    border-radius:17px;
+    padding:18px;
+    font-size:18px;
+    font-weight:900;
+    cursor:pointer;
+    background:linear-gradient(100deg,#ffb800,#ffe666);
+    color:#070707;
+    box-shadow:0 10px 30px rgba(255,196,0,.15);
+}
+
+button.copy{
+    width:100%;
+    border:0;
+    border-radius:15px;
+    padding:15px;
+    font-size:16px;
+    font-weight:800;
+    cursor:pointer;
+    background:linear-gradient(100deg,#15d77e,#72f3b5);
+    color:#05130c;
+    margin-top:12px;
 }
 
 .output{
-min-height:190px;
-max-height:600px;
-overflow:auto;
-white-space:pre-wrap;
-background:#070b13;
-border:1px solid #35405a;
-border-radius:16px;
-padding:17px;
-color:#e9edf6;
-font-size:14px;
-line-height:1.55;
+    white-space:pre-wrap;
+    background:#070b12;
+    border:1px solid #30384b;
+    border-radius:18px;
+    padding:18px;
+    margin-top:15px;
+    line-height:1.55;
+    color:#e8edf7;
+    min-height:100px;
+    max-height:520px;
+    overflow:auto;
 }
 
-.copy{
-width:100%;
-border:0;
-border-radius:17px;
-padding:17px;
-margin-top:13px;
-font-size:17px;
-font-weight:900;
-color:#03120c;
-background:linear-gradient(90deg,#08d77d,#71efad);
+.notice{
+    background:rgba(78,161,255,.08);
+    border:1px solid rgba(78,161,255,.25);
+    border-radius:14px;
+    padding:13px;
+    margin-top:12px;
+    color:#a9cfff;
+    font-size:13px;
+    line-height:1.5;
 }
 
-.steps{
-margin-top:15px;
-background:#0e1728;
-border-radius:14px;
-padding:15px;
-color:#aeb8ca;
-font-size:13px;
-line-height:1.7;
+.success{
+    color:#65eca9;
+    font-size:13px;
+    margin-top:9px;
+    display:none;
 }
-
-.steps strong{color:white}
 
 .footer{
-text-align:center;
-color:#5e687b;
-margin-top:30px;
-font-size:13px;
+    text-align:center;
+    color:#667085;
+    margin-top:30px;
+    font-size:13px;
+}
+
+@media(max-width:600px){
+    .container{
+        width:94%;
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .logo h1{
+        font-size:31px;
+    }
+
+    .card{
+        padding:19px;
+    }
 }
 </style>
 </head>
@@ -217,932 +326,927 @@ font-size:13px;
 
 <div class="container">
 
-<div class="header">
+    <div class="logo">
+        <h1>CRAZY<span class="turk">TURK</span></h1>
+        <p>CODM AI Thumbnail Prompt Studio</p>
+        <div class="badge">⚡ Creative Director Mode</div>
+    </div>
 
-<div class="logo">
-CRAZY<span>TURK</span>
-</div>
 
-<div class="subtitle">
-AI Thumbnail Prompt Studio
-</div>
+    <!-- FORMAT -->
 
-<div class="version">
-⚡ V4 • AI CREATIVE DIRECTOR
-</div>
+    <div class="card">
 
-</div>
+        <h2>🎮 Kapak Formatı</h2>
 
+        <div class="type-buttons">
 
-<!-- FORMAT -->
+            <button
+                class="type-btn active"
+                id="youtubeBtn"
+                onclick="setFormat('youtube')">
+                YouTube 16:9
+            </button>
 
-<div class="card">
+            <button
+                class="type-btn"
+                id="shortsBtn"
+                onclick="setFormat('shorts')">
+                Shorts 9:16
+            </button>
 
-<div class="card-title">
-📐 Kapak Formatı
-</div>
+        </div>
 
-<div class="format-grid">
+    </div>
 
-<button
-class="format active"
-onclick="setFormat('16:9',this)">
-▶ YouTube 16:9
-</button>
 
-<button
-class="format"
-onclick="setFormat('9:16',this)">
-📱 Shorts 9:16
-</button>
+    <!-- VIDEO -->
 
-</div>
+    <div class="card">
 
-</div>
+        <h2>🎬 Video Bilgileri</h2>
 
+        <label>Video konusu</label>
 
-<!-- VIDEO -->
+        <textarea
+            id="topic"
+            placeholder="Örn: Bul ve Yok Et maçında Takeoff haritasında tek başıma 1v5 aldım."></textarea>
 
-<div class="card">
 
-<div class="card-title">
-🎮 Video Bilgileri
-</div>
+        <label>İçerik türü</label>
 
-<label>
-Video konusu
-</label>
+        <select id="content">
 
-<textarea
-id="topic"
-placeholder="Örn: Bul ve Yok Et maçında Oden ile 14 kill aldım, MVP oldum ve maçı taşıdım.">
-</textarea>
+            <option>Call of Duty Mobile</option>
+            <option>Ranked Multiplayer</option>
+            <option>Search & Destroy</option>
+            <option>Battle Royale</option>
+            <option>Weapon Gameplay</option>
+            <option>Global Gameplay</option>
+            <option>Funny Moments</option>
 
+        </select>
 
-<label>
-Kapakta yazacak ana yazı
-<span class="new">AI SEÇEBİLİR</span>
-</label>
 
-<input
-id="headline"
-placeholder="Boş bırakırsan ChatGPT en iyi kapak yazısını kendisi seçer">
+        <label>Hedef kitle / Dil</label>
 
+        <select id="language">
 
-<div class="info green-info">
+            <option value="tr">
+                Türk CODM izleyicisi / Türkçe
+            </option>
 
-🤖 <b>Bu alanı boş bırakabilirsin.</b><br><br>
+            <option value="en">
+                Global CODM izleyicisi / English
+            </option>
 
-ChatGPT video konusunu analiz edip kapakta kullanılacak
-kısa, güçlü ve merak uyandıran ana yazıyı kendisi belirleyecek.
+        </select>
 
-Örneğin konuya göre:
-<b>“TEK BAŞIMA TAŞIDIM!”</b>,
-<b>“CEZAYI KESTİM!”</b>,
-<b>“ODEN DURDURULAMIYOR!”</b>
-gibi farklı fikirler üretebilir.
+    </div>
 
-</div>
 
+    <!-- IMAGE -->
 
-<label>
-İkinci yazı
-</label>
+    <div class="card">
 
-<input
-id="subheadline"
-placeholder="Boş bırakırsan AI gerekirse kendisi ekler">
+        <h2>🖼️ Kendi Referans Görsellerin</h2>
 
+        <div class="upload">
 
-<label>
-İçerik türü
-</label>
+            <strong>Silah, karakter veya oyun ekran görüntüsü</strong>
 
-<select id="content">
+            <small>
+                İstersen birden fazla görsel seçebilirsin.
+                Hiç görsel yüklemezsen AI sahneyi sıfırdan tasarlar.
+            </small>
 
-<option>Call of Duty Mobile</option>
-<option>Ranked Multiplayer</option>
-<option>Search & Destroy</option>
-<option>Battle Royale</option>
-<option>1 V 4 / Clutch</option>
-<option>High Kill Gameplay</option>
-<option>Silah / Gunsmith</option>
-<option>Mitik Silah</option>
-<option>Mitik Karakter</option>
-<option>Rank Push</option>
-<option>Rehber / Eğitim</option>
-<option>Komik / Eğlenceli</option>
-<option>Toxic Rakip / Tartışma</option>
-<option>Güncelleme / Haber</option>
-<option>Karşılaştırma</option>
+            <input
+                type="file"
+                id="images"
+                accept="image/*"
+                multiple
+                onchange="previewUploads()">
 
-</select>
+        </div>
 
-</div>
+        <div
+            id="imagePreview"
+            class="preview-images">
+        </div>
 
+    </div>
 
-<!-- LANGUAGE -->
 
-<div class="card">
+    <!-- YOUTUBE REFERENCE -->
 
-<div class="card-title">
-🌍 Hedef Kitle
-<span class="new">YENİ</span>
-</div>
+    <div class="card">
 
-<label>
-Kapak dili
-</label>
+        <h2>🔥 Rakip / Referans YouTube Kapağı</h2>
 
-<select id="language">
+        <label>YouTube video linki</label>
 
-<option value="tr">
-🇹🇷 Türkçe
-</option>
+        <input
+            id="youtubeReference"
+            type="url"
+            placeholder="https://www.youtube.com/watch?v=...">
 
-<option value="en">
-🌍 Global / İngilizce
-</option>
+        <small>
+            Beğendiğin bir YouTube videosunun linkini yapıştır.
+            Sistem video ID'sini algılayıp kapak görselini önizlemeye çalışır.
+        </small>
 
-</select>
 
+        <button
+            class="copy"
+            style="background:linear-gradient(100deg,#4e8cff,#7db5ff);color:white;"
+            onclick="loadYouTubeReference()">
 
-<label>
-Video tarzı
-</label>
+            🔎 REFERANS KAPAĞI GETİR
 
-<select id="videoStyle">
+        </button>
 
-<option>
-Normal YouTube videosu
-</option>
 
-<option>
-No Commentary Gameplay
-</option>
+        <div
+            id="referenceBox"
+            class="reference-box">
 
-<option>
-Global Gameplay
-</option>
+            <img
+                id="referenceImage"
+                alt="YouTube referans thumbnail">
 
-<option>
-Shorts / Hızlı içerik
-</option>
+            <div class="reference-info">
 
-<option>
-Rehber / Bilgilendirici
-</option>
+                <strong>Referans kapak hazır</strong>
 
-</select>
+                <span id="referenceId"></span>
 
-</div>
+            </div>
 
+        </div>
 
-<!-- REFERENCE -->
 
-<div class="card">
+        <div class="check-row">
 
-<div class="card-title">
-🖼️ Görsel Kullanımı
-</div>
+            <input
+                type="checkbox"
+                id="useReference"
+                checked>
 
-<label>
-ChatGPT'ye referans görsel yükleyecek misin?
-</label>
+            <label for="useReference">
+                Bu kapağın CTR mantığını, kompozisyonunu,
+                renk kontrastını ve görsel hiyerarşisini
+                yeni tasarım için referans al.
+            </label>
 
-<select id="referenceMode">
+        </div>
 
-<option value="none">
-✨ Hayır — ChatGPT kapağı sıfırdan oluştursun
-</option>
 
-<option value="weapon">
-🔫 Silah görseli yükleyeceğim
-</option>
+        <div class="notice">
+            Referans kapağı birebir kopyalatmak yerine;
+            neden dikkat çektiğini analiz ettiriyoruz.
+            Yeni kapak CrazyTurkCodM için özgün bir tasarım olmalı.
+        </div>
 
-<option value="character">
-🥷 Karakter görseli yükleyeceğim
-</option>
+    </div>
 
-<option value="gameplay">
-🎮 Gameplay ekran görüntüsü yükleyeceğim
-</option>
 
-<option value="weaponCharacter">
-⚔️ Silah + karakter görselleri yükleyeceğim
-</option>
+    <!-- TEXT -->
 
-<option value="multiple">
-🖼️ Birden fazla referans görsel yükleyeceğim
-</option>
+    <div class="card">
 
-</select>
+        <h2>✍️ Kapak Yazısı</h2>
 
+        <label>Ana kapak yazısı</label>
 
-<div class="info ai-info">
+        <input
+            id="mainText"
+            placeholder="Boş bırak = AI kendisi belirlesin">
 
-✨ Görsel yüklemezsen ChatGPT,
-video konusuna göre thumbnail konseptini,
-ana objeyi ve sahneyi sıfırdan tasarlayacak.
+        <small>
+            Boş bırakırsan AI video konusuna göre
+            kısa ve CTR odaklı ana kapak yazısını kendisi seçer.
+        </small>
 
-</div>
 
+        <label>İkinci yazı</label>
 
-<label>
-Ana odak
-</label>
+        <input
+            id="secondText"
+            placeholder="Boş bırak = gerekirse AI karar versin">
 
-<select id="focus">
+    </div>
 
-<option>
-🤖 AI video konusuna göre karar versin
-</option>
 
-<option>
-🔫 Silah
-</option>
+    <!-- CREATIVE SETTINGS -->
 
-<option>
-🥷 Karakter
-</option>
+    <div class="card">
 
-<option>
-🔫 Silah + karakter
-</option>
+        <h2>🤖 AI Creative Director</h2>
 
-<option>
-🔥 Çatışma / aksiyon sahnesi
-</option>
+        <div class="grid">
 
-<option>
-💀 1 V 4 clutch
-</option>
+            <div>
 
-<option>
-🏆 MVP / Zafer
-</option>
+                <label>Ana odak</label>
 
-<option>
-😡 Rakip / İntikam atmosferi
-</option>
+                <select id="focus">
+                    <option>AI video konusuna göre karar versin</option>
+                    <option>Silah</option>
+                    <option>Karakter</option>
+                    <option>1vX / Clutch anı</option>
+                    <option>Patlama / Aksiyon</option>
+                    <option>Skor / Başarı anı</option>
+                </select>
 
-<option>
-🎯 Gameplay sahnesi
-</option>
+            </div>
 
-<option>
-📝 Büyük yazı + güçlü arka plan
-</option>
 
-</select>
+            <div>
 
-</div>
+                <label>Tasarım stili</label>
 
+                <select id="style">
+                    <option>AI video konusuna göre en iyi stili seçsin</option>
+                    <option>Sinematik CODM</option>
+                    <option>Viral Gaming</option>
+                    <option>Premium Minimal</option>
+                    <option>Agresif Ranked</option>
+                    <option>Neon Cyberpunk</option>
+                    <option>Military Tactical</option>
+                </select>
 
-<!-- AI DIRECTOR -->
+            </div>
 
-<div class="card">
 
-<div class="card-title">
-🧠 AI Tasarım Yönetmeni
-</div>
+            <div>
 
+                <label>Renk paleti</label>
 
-<label>
-Tasarım stili
-</label>
+                <select id="color">
+                    <option>AI konuya göre farklı renk seçsin</option>
+                    <option>Sarı / Siyah</option>
+                    <option>Kırmızı / Siyah</option>
+                    <option>Mor / Neon</option>
+                    <option>Mavi / Turuncu</option>
+                    <option>Altın / Siyah</option>
+                    <option>Yeşil / Siyah</option>
+                </select>
 
-<select id="style">
+            </div>
 
-<option>
-🤖 AI video konusuna göre en iyi stili seçsin
-</option>
 
-<option>
-🎬 Profesyonel CODM / Sinematik
-</option>
+            <div>
 
-<option>
-🔥 Ateş / Savaş
-</option>
+                <label>Efekt yoğunluğu</label>
 
-<option>
-🟡 Sarı / Siyah Yüksek CTR
-</option>
+                <select id="effects">
+                    <option>Güçlü ama profesyonel</option>
+                    <option>Viral / Çok yüksek</option>
+                    <option>Sinematik / Dengeli</option>
+                    <option>Minimal / Premium</option>
+                </select>
 
-<option>
-🔴 Kırmızı / Siyah Agresif
-</option>
+            </div>
 
-<option>
-🟣 Mor / Mavi Mitik
-</option>
+        </div>
 
-<option>
-⚡ Elektrik / Enerji
-</option>
 
-<option>
-🌃 Neon / Cyberpunk
-</option>
+        <label>CTR hedefi</label>
 
-<option>
-💀 Karanlık / Ölümcül
-</option>
+        <select id="ctr">
+            <option>Çok yüksek CTR</option>
+            <option>Sinematik / Premium</option>
+            <option>Temiz ve profesyonel</option>
+        </select>
 
-<option>
-🏆 Altın / Legendary
-</option>
+    </div>
 
-<option>
-✨ Premium / Temiz
-</option>
 
-<option>
-🎮 Espor / Competitive
-</option>
+    <!-- EXTRA -->
 
-</select>
+    <div class="card">
 
+        <h2>✨ Ek İstekler</h2>
 
-<label>
-Atmosfer
-</label>
+        <label>Özel istek</label>
 
-<select id="mood">
+        <textarea
+            id="extra"
+            placeholder="Örn: Rakiplerin susturulduğu hissi versin. Silah çok büyük olsun. Daha önceki kapaklardan tamamen farklı olsun."></textarea>
 
-<option>🤖 AI karar versin</option>
-<option>😤 Dominasyon</option>
-<option>😡 İntikam</option>
-<option>🔥 Kaos / Çatışma</option>
-<option>😱 Şaşırtıcı</option>
-<option>🏆 Zafer</option>
-<option>💀 Ölümcül</option>
-<option>👑 Legendary</option>
-<option>⚡ Adrenalin</option>
-<option>😂 Komik</option>
 
-</select>
+        <label>İstemediğin şeyler</label>
 
+        <textarea
+            id="negative"
+            placeholder="Örn: Çok fazla yazı olmasın, sahte skor eklenmesin, tasarım karmaşık olmasın."></textarea>
 
-<label>
-Renk paleti
-</label>
+    </div>
 
-<select id="colors">
 
-<option>
-🤖 AI video konusuna göre farklı renkler seçsin
-</option>
+    <!-- GENERATE -->
 
-<option>Sarı + Siyah</option>
-<option>Kırmızı + Siyah</option>
-<option>Mor + Mavi</option>
-<option>Turuncu + Siyah</option>
-<option>Altın + Siyah</option>
-<option>Mavi + Elektrik</option>
-<option>Yeşil + Siyah</option>
-<option>Cinematic Color Grading</option>
+    <div class="card">
 
-</select>
+        <button
+            class="main"
+            onclick="generatePrompt()">
 
+            ⚡ PROFESYONEL PROMPT HAZIRLA
 
-<label>
-CTR seviyesi
-</label>
+        </button>
 
-<select id="ctr">
+        <div
+            id="output"
+            class="output">
 
-<option>
-🔥 Çok yüksek CTR
-</option>
+            Video bilgilerini doldur ve promptu hazırla.
 
-<option>
-⚡ Yüksek ama dengeli
-</option>
+        </div>
 
-<option>
-🎬 Sinematik / Premium
-</option>
+        <button
+            class="copy"
+            onclick="copyPrompt()">
 
-<option>
-✨ Temiz / Minimal
-</option>
+            📋 PROMPTU KOPYALA
 
-</select>
+        </button>
 
-</div>
+        <div
+            id="copied"
+            class="success">
 
+            ✓ Prompt kopyalandı. ChatGPT'ye yapıştırabilirsin.
 
-<!-- COMPOSITION -->
+        </div>
 
-<div class="card">
+    </div>
 
-<div class="card-title">
-🎨 Akıllı Kompozisyon
-</div>
 
-
-<label>
-Kompozisyon
-</label>
-
-<select id="composition">
-
-<option>
-🤖 AI her video için özgün kompozisyon oluştursun
-</option>
-
-<option>
-Ana obje sağda / yazı solda
-</option>
-
-<option>
-Ana obje solda / yazı sağda
-</option>
-
-<option>
-Ana obje ortada
-</option>
-
-<option>
-Büyük obje + savaş arka planı
-</option>
-
-<option>
-Split Screen / VS
-</option>
-
-<option>
-Sinematik poster
-</option>
-
-</select>
-
-
-<label>
-Yazı stili
-</label>
-
-<select id="textStyle">
-
-<option>
-🤖 AI konuya göre en iyi font stilini seçsin
-</option>
-
-<option>
-Dev kalın gaming
-</option>
-
-<option>
-Beyaz + Sarı
-</option>
-
-<option>
-Kırmızı + Beyaz
-</option>
-
-<option>
-3D Metalik
-</option>
-
-<option>
-Brush / Savaş
-</option>
-
-<option>
-Temiz Profesyonel
-</option>
-
-</select>
-
-
-<label>
-Efekt yoğunluğu
-</label>
-
-<select id="effects">
-
-<option>
-🔥 Güçlü ama profesyonel
-</option>
-
-<option>
-⚡ Viral / Çok yüksek
-</option>
-
-<option>
-🎬 Sinematik / Dengeli
-</option>
-
-<option>
-✨ Minimal / Premium
-</option>
-
-</select>
-
-</div>
-
-
-<!-- EXTRA -->
-
-<div class="card">
-
-<div class="card-title">
-🚀 Ekstra İstekler
-</div>
-
-
-<label>
-Özellikle görmek istediğin şey
-</label>
-
-<textarea
-id="extra"
-placeholder="Örn: Silah büyük olsun, rakiplerin susturulduğu hissi versin. Boş bırakabilirsin.">
-</textarea>
-
-
-<label>
-Olmasını istemediğin şey
-</label>
-
-<textarea
-id="negative"
-placeholder="Örn: Fazla yazı olmasın, sahte kill sayısı ekleme, silahın şeklini değiştirme...">
-</textarea>
-
-
-<button
-class="generate"
-onclick="generatePrompt()">
-
-⚡ AKILLI PROMPT OLUŞTUR
-
-</button>
-
-</div>
-
-
-<!-- OUTPUT -->
-
-<div class="card">
-
-<div class="card-title">
-🤖 ChatGPT'ye Gönderilecek Prompt
-</div>
-
-
-<div
-id="output"
-class="output">
-
-Video konusunu gir ve
-“AKILLI PROMPT OLUŞTUR” butonuna bas.
-
-</div>
-
-
-<button
-id="copyButton"
-class="copy"
-onclick="copyPrompt()">
-
-📋 PROMPTU KOPYALA
-
-</button>
-
-
-<div class="steps">
-
-<strong>📱 Kullanım</strong><br><br>
-
-1️⃣ Video konusunu yaz.<br>
-
-2️⃣ Ana yazıyı istersen boş bırak.<br>
-
-3️⃣ Diğer seçenekleri seç.<br>
-
-4️⃣ Akıllı Prompt Oluştur'a bas.<br>
-
-5️⃣ Promptu kopyala.<br>
-
-6️⃣ ChatGPT'ye gel.<br>
-
-7️⃣ Referans kullanacaksan görseli yükle.<br>
-
-8️⃣ Promptu yapıştır ve gönder.<br><br>
-
-🤖 Ana yazıyı boş bıraktığında ChatGPT kapak metnini de kendisi oluşturacak.
-
-</div>
-
-</div>
-
-
-<div class="footer">
-CrazyTurkCodM • AI Thumbnail Prompt Studio V4
-</div>
+    <div class="footer">
+        CrazyTurkCodM • AI Thumbnail Prompt Studio
+    </div>
 
 </div>
 
 
 <script>
 
-let format="16:9";
+let format = "youtube";
+let youtubeVideoId = "";
 
 
-function setFormat(value,button){
+function setFormat(type){
 
-format=value;
+    format = type;
 
-document
-.querySelectorAll(".format")
-.forEach(x=>x.classList.remove("active"));
+    document
+        .getElementById("youtubeBtn")
+        .classList.toggle("active", type === "youtube");
 
-button.classList.add("active");
+    document
+        .getElementById("shortsBtn")
+        .classList.toggle("active", type === "shorts");
 
 }
 
 
-function val(id){
+function previewUploads(){
 
-return document
-.getElementById(id)
-.value
-.trim();
+    const files =
+        document.getElementById("images").files;
+
+    const preview =
+        document.getElementById("imagePreview");
+
+    preview.innerHTML = "";
+
+    Array.from(files).forEach(file => {
+
+        const img =
+            document.createElement("img");
+
+        img.src =
+            URL.createObjectURL(file);
+
+        preview.appendChild(img);
+
+    });
+
+}
+
+
+/*
+YouTube ID algılama.
+
+Desteklenen örnekler:
+
+youtube.com/watch?v=ID
+youtu.be/ID
+youtube.com/shorts/ID
+youtube.com/embed/ID
+*/
+
+function getYouTubeId(url){
+
+    if(!url){
+        return null;
+    }
+
+    try{
+
+        const parsed =
+            new URL(url.trim());
+
+        if(parsed.hostname.includes("youtu.be")){
+
+            return parsed.pathname
+                .split("/")
+                .filter(Boolean)[0];
+
+        }
+
+        if(parsed.searchParams.get("v")){
+
+            return parsed.searchParams.get("v");
+
+        }
+
+        const parts =
+            parsed.pathname
+                .split("/")
+                .filter(Boolean);
+
+        const shortsIndex =
+            parts.indexOf("shorts");
+
+        if(
+            shortsIndex !== -1 &&
+            parts[shortsIndex + 1]
+        ){
+            return parts[shortsIndex + 1];
+        }
+
+
+        const embedIndex =
+            parts.indexOf("embed");
+
+        if(
+            embedIndex !== -1 &&
+            parts[embedIndex + 1]
+        ){
+            return parts[embedIndex + 1];
+        }
+
+    }
+    catch(e){
+
+        return null;
+
+    }
+
+    return null;
+
+}
+
+
+function loadYouTubeReference(){
+
+    const url =
+        document
+        .getElementById("youtubeReference")
+        .value;
+
+    const id =
+        getYouTubeId(url);
+
+    if(!id){
+
+        alert(
+            "Geçerli bir YouTube video linki gir."
+        );
+
+        return;
+
+    }
+
+    youtubeVideoId = id;
+
+
+    /*
+    maxresdefault önce denenir.
+    Bazı videolarda yüksek çözünürlüklü
+    thumbnail bulunmayabilir.
+    */
+
+    const image =
+        document.getElementById("referenceImage");
+
+    image.onerror = function(){
+
+        if(
+            !image.src.includes("hqdefault")
+        ){
+
+            image.src =
+                "https://img.youtube.com/vi/" +
+                id +
+                "/hqdefault.jpg";
+
+        }
+
+    };
+
+
+    image.src =
+        "https://img.youtube.com/vi/" +
+        id +
+        "/maxresdefault.jpg";
+
+
+    document
+        .getElementById("referenceId")
+        .textContent =
+        "YouTube video ID: " + id;
+
+
+    document
+        .getElementById("referenceBox")
+        .style.display =
+        "block";
 
 }
 
 
 function generatePrompt(){
 
-const topic=
-val("topic") ||
-"Call of Duty Mobile gameplay videosu";
+    const topic =
+        document.getElementById("topic").value.trim();
 
-const headline=
-val("headline");
+    if(!topic){
 
-const subheadline=
-val("subheadline");
+        alert("Önce video konusunu yaz.");
 
-const content=val("content");
+        return;
 
-const language=val("language");
-
-const videoStyle=val("videoStyle");
-
-const reference=val("referenceMode");
-
-const focus=val("focus");
-
-const style=val("style");
-
-const mood=val("mood");
-
-const colors=val("colors");
-
-const ctr=val("ctr");
-
-const composition=val("composition");
-
-const textStyle=val("textStyle");
-
-const effects=val("effects");
-
-const extra=val("extra");
-
-const negative=val("negative");
+    }
 
 
-let orientation=
-format==="9:16"
-?
-"dikey 9:16 YouTube Shorts kapak görseli"
-:
-"yatay 16:9 YouTube thumbnail";
+    const content =
+        document.getElementById("content").value;
+
+    const language =
+        document.getElementById("language").value;
+
+    const mainText =
+        document.getElementById("mainText").value.trim();
+
+    const secondText =
+        document.getElementById("secondText").value.trim();
+
+    const focus =
+        document.getElementById("focus").value;
+
+    const style =
+        document.getElementById("style").value;
+
+    const color =
+        document.getElementById("color").value;
+
+    const effects =
+        document.getElementById("effects").value;
+
+    const ctr =
+        document.getElementById("ctr").value;
+
+    const extra =
+        document.getElementById("extra").value.trim();
+
+    const negative =
+        document.getElementById("negative").value.trim();
+
+    const files =
+        document.getElementById("images").files;
+
+    const referenceURL =
+        document
+        .getElementById("youtubeReference")
+        .value
+        .trim();
+
+    const useReference =
+        document
+        .getElementById("useReference")
+        .checked;
 
 
-let languageInstruction=
-language==="en"
-?
-`
-HEDEF KİTLE:
-Uluslararası / global Call of Duty Mobile izleyicisi.
+    let formatText;
 
-Kapaktaki bütün metinler doğal ve güçlü İNGİLİZCE olmalı.
-`
-:
-`
-HEDEF KİTLE:
+    if(format === "youtube"){
+
+        formatText =
+            "yatay 16:9 normal YouTube thumbnail";
+
+    }
+    else{
+
+        formatText =
+            "dikey 9:16 YouTube Shorts kapak görseli";
+
+    }
+
+
+    let audienceText;
+
+    if(language === "tr"){
+
+        audienceText =
+`HEDEF KİTLE:
 Türk Call of Duty Mobile izleyicisi.
 
 Kapaktaki bütün metinler doğal TÜRKÇE olmalı.
-Türkçe karakterleri doğru kullan.
-`;
+Türkçe karakterleri doğru kullan.`;
+
+    }
+    else{
+
+        audienceText =
+`TARGET AUDIENCE:
+International / global Call of Duty Mobile viewers.
+
+All text visible on the thumbnail must be natural,
+powerful ENGLISH.`;
+
+    }
 
 
-/* HEADLINE */
+    let mainTextInstruction;
 
-let headlineInstruction="";
+    if(mainText){
 
-if(headline){
+        mainTextInstruction =
+`KULLANICININ BELİRLEDİĞİ ANA KAPAK YAZISI:
 
-headlineInstruction=`
-KULLANICININ BELİRLEDİĞİ ANA KAPAK YAZISI:
+"${mainText}"
 
-"${headline}"
+Bu ana yazıyı harf hatası yapmadan AYNEN kullan.`;
 
-Bu ana yazıyı harf hatası yapmadan AYNEN kullan.
-`;
+    }
+    else{
 
-}else{
-
-headlineInstruction=`
-ANA KAPAK YAZISI:
+        mainTextInstruction =
+`ANA KAPAK YAZISI:
 
 Kullanıcı ana kapak yazısını sana bırakıyor.
 
-Video konusunu analiz et ve bu video için
-en yüksek tıklama potansiyeline sahip,
-doğal ve güçlü kapak yazısını SEN belirle.
+Video konusunu analiz et.
 
-Kapak yazısı tercihen 2-5 kelime arasında olsun.
+Bu video için en yüksek tıklama potansiyeline sahip,
+doğal, güçlü ve özgün kapak yazısını SEN belirle.
 
-Kısa, güçlü, merak uyandırıcı ve mobil ekranda
-anında okunabilir olsun.
+Tercihen 2-5 kelime kullan.
+
+Metin mobil ekranda yaklaşık 1 saniyede okunabilmeli.
 
 Başlığın tamamını kapakta tekrar etme.
 
-Video konusundaki en güçlü olayı veya duyguyu seç.
+Video konusunun en güçlü olayını,
+duygusunu veya sonucunu öne çıkar.
 
-Clickbait uğruna videoda olmayan bir şey söyleme.
+Jenerik ifadeler yerine videoya özel
+bir mesaj tercih et.
 
-Sadece video gerçekten destekliyorsa
-"EZDİM", "TAŞIDIM", "DURDURULAMIYOR",
-"1 V 4", "MVP", "ÖLÜMCÜL" gibi
-güçlü ifadeler kullan.
+Yanıltıcı clickbait yapma.
 
-Kapak metni sıradan ve jenerik olmasın.
+Video gerçekten destekliyorsa
+1V5, ACE, MVP, TAŞIDIM, EZDİM,
+DURDURULAMIYOR gibi güçlü ifadeler kullanılabilir.
 
-"EFSANE MAÇ" gibi genel bir ifade yerine,
-mümkün olduğunda videoya özel bir mesaj seç.
+Seçtiğin ana kapak yazısını
+oluşturacağın görselin üzerinde
+doğru şekilde yaz.`;
 
-ÖNEMLİ:
-Kapak görselini üretirken seçtiğin ana yazıyı
-görselin üzerinde doğru şekilde yaz.
-`;
-
-}
+    }
 
 
-/* SUBHEADLINE */
+    let secondTextInstruction;
 
-let subInstruction="";
+    if(secondText){
 
-if(subheadline){
+        secondTextInstruction =
+`İKİNCİ YAZI:
 
-subInstruction=`
-İKİNCİ KAPAK YAZISI:
+"${secondText}"
 
-"${subheadline}"
+Gerekliyse küçük destekleyici metin olarak kullan.`;
 
-Bunu da doğru şekilde kullan.
-`;
+    }
+    else{
 
-}else{
-
-subInstruction=`
-İKİNCİ YAZI:
+        secondTextInstruction =
+`İKİNCİ YAZI:
 
 İkinci yazı zorunlu değil.
 
-Thumbnail tek ana yazıyla daha güçlü olacaksa
+Tek ana yazı daha güçlü olacaksa
 ikinci yazı EKLEME.
 
-Ancak tasarıma gerçekten katkı sağlayacaksa
-çok kısa bir ikinci vurgu metni kendin oluşturabilirsin.
+Sadece tasarıma gerçekten katkı sağlıyorsa
+çok kısa bir ikinci vurgu metni oluştur.`;
 
-Gereksiz yazı kalabalığı oluşturma.
-`;
-
-}
+    }
 
 
-/* REFERENCE */
+    let imageInstruction;
 
-let referenceInstruction="";
+    if(files.length === 0){
 
-if(reference==="none"){
+        imageInstruction =
+`REFERANS GÖRSEL:
 
-referenceInstruction=`
-REFERANS GÖRSEL YOK.
+Kullanıcı bu promptla birlikte kendi oyun görselini
+yüklememişse tasarımı video konusuna göre sıfırdan oluştur.
 
-Thumbnail tasarımını sıfırdan oluştur.
+Ana objeyi, ortamı, kamera açısını,
+ışığı ve sahneyi kendin belirle.
 
-Video konusunu analiz ederek ana objeyi,
-arka planı, sahneyi, kamera açısını,
-ışıklandırmayı ve görsel hikâyeyi kendin tasarla.
+Belirli bir mevcut karakteri veya silahı
+gereksiz yere birebir kopyalama.
 
-Belirli bir mevcut karakter veya silah görünümünü
-birebir kopyalamaya çalışma.
+Özgün ve profesyonel mobil FPS
+gaming thumbnail estetiği oluştur.`;
 
-Özgün ve profesyonel mobil FPS gaming
-thumbnail estetiği oluştur.
-`;
+    }
 
-}
+    else if(files.length === 1){
 
-else if(reference==="weapon"){
+        imageInstruction =
+`KULLANICI REFERANS GÖRSELİ:
 
-referenceInstruction=`
-Kullanıcı bir silah görseli yükledi.
+Kullanıcı bu promptla birlikte 1 adet
+kendi referans görselini yükledi.
 
-Yüklenen silahı thumbnail'ın önemli ana objelerinden
-biri olarak kullan.
+Yüklenen görseli dikkatle analiz et.
 
-Silahın temel şekli, renkleri ve ayırt edici
-tasarım özelliklerini mümkün olduğunca doğru koru.
+Video açısından önemli olan ana objeyi
+mümkün olduğunca doğru koru.
 
-Silahı gereksiz yere yeniden tasarlama.
+Ana objeyi profesyonel şekilde ayır,
+keskinleştir ve yeni thumbnail kompozisyonuna entegre et.
 
-Silahı arka plandan profesyonel şekilde ayır,
-daha keskin ve sinematik göster.
-`;
+Referans görseldeki ana objeyi
+gereksiz yere yeniden tasarlama.`;
 
-}
+    }
 
-else if(reference==="character"){
+    else{
 
-referenceInstruction=`
-Kullanıcı bir karakter görseli yükledi.
+        imageInstruction =
+`KULLANICI REFERANS GÖRSELLERİ:
 
-Karakterin temel görünümünü,
-kıyafetini, renklerini ve ayırt edici
-özelliklerini mümkün olduğunca koru.
+Kullanıcı bu promptla birlikte ${files.length} adet
+referans görsel yükledi.
 
-Karakteri güçlü bir gaming thumbnail
-kompozisyonuna yerleştir.
-`;
-
-}
-
-else if(reference==="gameplay"){
-
-referenceInstruction=`
-Kullanıcı bir gameplay ekran görüntüsü yükledi.
-
-Görüntüdeki en güçlü aksiyon anını analiz et.
-
-Gereksiz HUD ve ekran kalabalığını azalt.
-
-Gameplay görüntüsünü sinematik ve profesyonel
-bir YouTube thumbnail tasarımına dönüştür.
-`;
-
-}
-
-else if(reference==="weaponCharacter"){
-
-referenceInstruction=`
-Kullanıcı silah ve karakter referansları yükledi.
-
-İki referansın da ayırt edici özelliklerini koru.
-
-Silah ve karakteri tek bir profesyonel,
-dengeli gaming thumbnail kompozisyonunda birleştir.
-`;
-
-}
-
-else{
-
-referenceInstruction=`
-Kullanıcı birden fazla referans görsel yükledi.
-
-Görselleri analiz et.
+Görselleri birlikte analiz et.
 
 Video konusu açısından en değerli objeleri seç.
 
 Her görseli kullanmak zorunda değilsin.
 
-Gereksiz kalabalık oluşturmadan,
-referansları tek bir profesyonel
-thumbnail tasarımında birleştir.
+Gereksiz kalabalık oluşturmadan
+en değerli unsurları tek bir profesyonel
+thumbnail tasarımında birleştir.`;
+
+    }
+
+
+    let youtubeInstruction = "";
+
+    if(
+        referenceURL &&
+        youtubeVideoId &&
+        useReference
+    ){
+
+        youtubeInstruction =
+`
+━━━━━━━━━━━━━━━━━━
+
+YOUTUBE THUMBNAIL TASARIM REFERANSI:
+
+Kullanıcı aşağıdaki YouTube videosunun kapağını
+görsel tasarım referansı olarak seçti:
+
+${referenceURL}
+
+Video ID:
+${youtubeVideoId}
+
+Bu videonun mevcut thumbnail görselini
+REFERANS TASARIM olarak incele.
+
+ÖNEMLİ:
+
+Referans kapağı birebir kopyalama.
+
+Referans kapağın belirli özgün karakterlerini,
+logolarını, kanal kimliğini veya özel grafiklerini
+taklit etme.
+
+Bunun yerine kapağın neden dikkat çektiğini analiz et:
+
+- görsel hiyerarşi
+- ana obje büyüklüğü
+- obje yerleşimi
+- negatif alan kullanımı
+- kontrast
+- ışık yönü
+- renk ilişkileri
+- metin miktarı
+- yazı büyüklüğü
+- subject separation
+- odak noktası
+- dramatik derinlik
+- merak oluşturma yöntemi
+- mobil ekrandaki okunabilirlik
+- CTR mantığı
+
+Bu üst düzey tasarım prensiplerinden
+esinlenerek CrazyTurkCodM için
+YENİ ve ÖZGÜN bir kompozisyon oluştur.
+
+Referans tasarım ile yeni tasarım
+yan yana konulduğunda birebir kopya
+gibi görünmemeli.
+
+Yeni thumbnail video konusuna,
+CrazyTurkCodM kanalına ve kullanıcının
+yüklediği kendi görsellerine göre yeniden tasarlanmalı.
 `;
 
-}
+    }
 
 
-/* PROMPT */
+    let extraInstruction =
+        extra
+        ? `
+KULLANICININ EK İSTEĞİ:
 
-let prompt=`
-CRAZYTURKCODM
+${extra}
+`
+        : "";
+
+
+    let negativeInstruction =
+        negative
+        ? `
+KULLANICININ İSTEMEDİĞİ ŞEYLER:
+
+${negative}
+`
+        : "";
+
+
+    let formatRules;
+
+    if(format === "youtube"){
+
+        formatRules =
+`YOUTUBE FORMAT KURALI:
+
+Tasarım kesinlikle 16:9 YATAY olmalı.
+
+Profesyonel normal YouTube thumbnail
+kompozisyonuna göre hazırlanmalı.
+
+Küçük önizlemede ana obje ve mesaj
+hemen anlaşılmalı.`;
+
+    }
+    else{
+
+        formatRules =
+`SHORTS FORMAT KURALI:
+
+Tasarım kesinlikle 9:16 DİKEY olmalı.
+
+Ana obje ve ana kapak yazısını
+merkezdeki güvenli bölgede tut.
+
+YouTube Shorts arayüzünün kapatabileceği
+kenarlara kritik bilgi yerleştirme.
+
+Telefon ekranında ilk bakışta okunabilir olmalı.`;
+
+    }
+
+
+    const prompt =
+`CRAZYTURKCODM
 PROFESYONEL YOUTUBE THUMBNAIL TASARIMI
 
 CrazyTurkCodM kanalı için profesyonel bir
-${orientation} oluştur.
+${formatText} oluştur.
 
 ━━━━━━━━━━━━━━━━━━
 
@@ -1156,21 +1260,27 @@ ${topic}
 
 ${content}
 
-VİDEO TARZI:
+VİDEO FORMATI:
 
-${videoStyle}
+${format === "youtube"
+? "Normal YouTube videosu"
+: "Shorts / Hızlı içerik"}
 
-${languageInstruction}
-
-━━━━━━━━━━━━━━━━━━
-
-${headlineInstruction}
-
-${subInstruction}
+${audienceText}
 
 ━━━━━━━━━━━━━━━━━━
 
-${referenceInstruction}
+${mainTextInstruction}
+
+━━━━━━━━━━━━━━━━━━
+
+${secondTextInstruction}
+
+━━━━━━━━━━━━━━━━━━
+
+${imageInstruction}
+
+${youtubeInstruction}
 
 ━━━━━━━━━━━━━━━━━━
 
@@ -1182,25 +1292,13 @@ TASARIM STİLİ:
 
 ${style}
 
-ATMOSFER:
-
-${mood}
-
 RENK PALETİ:
 
-${colors}
+${color}
 
 CTR HEDEFİ:
 
 ${ctr}
-
-KOMPOZİSYON:
-
-${composition}
-
-YAZI STİLİ:
-
-${textStyle}
 
 EFEKT YOĞUNLUĞU:
 
@@ -1210,41 +1308,79 @@ ${effects}
 
 AI CREATIVE DIRECTOR:
 
-Bu talimatları mekanik olarak yan yana dizme.
+Talimatları mekanik biçimde yan yana dizme.
 
-Önce video konusunun hikâyesini analiz et.
+Önce video konusundaki asıl hikâyeyi analiz et.
 
-Thumbnail için en güçlü tek fikri belirle.
+Thumbnail için en güçlü TEK ana fikri belirle.
 
-İzleyicinin yaklaşık 1 saniyede
-videonun ana olayını anlayabileceği
-görsel hiyerarşi oluştur.
+İzleyici yaklaşık 1 saniyede
+videonun ana olayını anlayabilmeli.
 
 Ana obje büyük, net ve keskin olsun.
 
+Göz önce ana objeye,
+ardından ana kapak yazısına yönelsin.
+
 Arka plan ana objeyle rekabet etmesin.
 
-Göz önce ana objeye,
-sonra kapak yazısına yönelsin.
+Kompozisyonda güçlü foreground,
+midground ve background ayrımı oluştur.
 
 Gerekiyorsa kamera açısını,
-ışığı, obje konumlarını,
-arka planı ve efektleri
-profesyonel tasarımcı gibi kendin belirle.
+obje konumunu,
+perspektifi,
+ışıklandırmayı,
+arka planı,
+atmosferi
+ve efektleri profesyonel bir
+gaming thumbnail tasarımcısı gibi belirle.
 
-Her videoda aynı kompozisyonu kullanma.
+Her videoda aynı şablonu kullanma.
 
-Önceki CrazyTurkCodM kapaklarını
+Önceki CrazyTurkCodM thumbnail tasarımlarını
 birebir tekrar etme.
 
-Video konusuna göre farklı renk,
-ışık ve kompozisyon fikirleri üret.
+Video konusuna göre farklı
+kompozisyon, renk ve ışık fikirleri üret.
+
+━━━━━━━━━━━━━━━━━━
+
+CTR TASARIM MANTIĞI:
+
+Thumbnail tek bir güçlü hikâyeye odaklansın.
+
+Ana olay ilk bakışta anlaşılmalı.
+
+Gereksiz küçük objeleri kaldır.
+
+Ana objeyi gerektiğinde arka plandan
+ışık, kontrast, blur ve depth ile ayır.
+
+Merak duygusu yarat,
+ancak videoda olmayan bir olayı gösterme.
+
+Küçük mobil thumbnail boyutunda dahi
+ana obje ve ana yazı güçlü görünmeli.
+
+Görseli aşırı kalabalıklaştırma.
+
+Her boş alanı efektlerle doldurma.
+
+CTR için öncelik sırası:
+
+1. Hikâye
+2. Ana obje
+3. Ana yazı
+4. Kontrast
+5. Duygu
+6. Efektler
 
 ━━━━━━━━━━━━━━━━━━
 
 GÖRSEL KALİTESİ:
 
-Yüksek kaliteli gaming thumbnail.
+Premium gaming thumbnail kalitesi.
 
 Sinematik ışıklandırma.
 
@@ -1254,21 +1390,29 @@ Kontrollü rim light.
 
 Volumetric lighting.
 
-Atmosferik sis.
+Atmosferik derinlik.
 
-Derinlik hissi.
+Doğru perspektif.
 
-Gerektiğinde kıvılcımlar,
-enerji, ateş, parçacık veya motion effects.
+Keskin ana obje.
 
-Canlı fakat profesyonel renkler.
+Profesyonel renk düzenleme.
 
-Keskin detaylar.
+Gerektiğinde:
 
-Premium YouTube içerik üreticisi görünümü.
+- kıvılcım
+- ateş
+- enerji
+- sis
+- parçacık
+- motion effect
+- ışık huzmesi
+- patlama
 
-Mobil ekranda küçük thumbnail boyutunda
-bile güçlü görünmeli.
+kullanılabilir.
+
+Ancak efektler ana hikâyenin
+önüne geçmemeli.
 
 ━━━━━━━━━━━━━━━━━━
 
@@ -1276,113 +1420,62 @@ YAZI KURALLARI:
 
 Kapakta mümkün olduğunca az yazı kullan.
 
-Ana yazı çok büyük ve kolay okunabilir olsun.
+Ana yazı büyük,
+kalın,
+yüksek kontrastlı
+ve mobil ekranda kolay okunabilir olsun.
 
-Güçlü outline ve gölge kullanabilirsin.
+Gerekirse güçlü outline,
+gölge veya kontrollü glow kullan.
 
-Yazıyı silahın veya karakter yüzünün
-kritik bölümlerinin üzerine koyma.
+Metni ana objenin kritik bölgelerinin
+üzerine yerleştirme.
+
+Türkçe kullanılıyorsa
+Türkçe karakterleri doğru yaz.
+
+İngilizce kullanılıyorsa
+doğal İngilizce kullan.
 
 Rastgele kelimeler ekleme.
 
 Bozuk harfler oluşturma.
 
-Kullanıcı istemediyse sahte skor,
-sahte kill sayısı,
-sahte rank,
-sahte chat mesajı
-veya uydurma oyun istatistiği ekleme.
+Gereksiz küçük yazılar ekleme.
+
+Kullanıcı belirtmediyse:
+
+- sahte kill sayısı
+- sahte skor
+- sahte rank
+- sahte chat mesajı
+- sahte istatistik
+- uydurma oyun arayüzü
+
+ekleme.
 
 ━━━━━━━━━━━━━━━━━━
 
-CTR KURALLARI:
+ÖZGÜNLÜK KURALI:
 
-Thumbnail güçlü merak uyandırsın,
-ancak yanıltıcı clickbait olmasın.
+Referans thumbnail veya kullanıcının
+yüklediği görseller yaratıcı yönlendirme
+sağlamak için kullanılabilir.
 
-Tek bir ana hikâyeye odaklan.
+Başka bir içerik üreticisinin kapağını
+birebir yeniden üretme.
 
-Gereksiz küçük detaylardan kaçın.
+Referansın genel tasarım prensiplerini öğren,
+fakat sonuç CrazyTurkCodM için
+özgün bir thumbnail olsun.
 
-Ana obje ve yazı arasında
-güçlü görsel denge oluştur.
+${extraInstruction}
 
-Thumbnail rakip CODM videolarının yanında
-dikkat çekecek kadar güçlü,
-ancak profesyonel görünmeli.
-`;
-
-
-/* FORMAT */
-
-if(format==="9:16"){
-
-prompt+=`
+${negativeInstruction}
 
 ━━━━━━━━━━━━━━━━━━
 
-SHORTS FORMAT KURALI:
-
-Tasarım kesinlikle 9:16 DİKEY olmalı.
-
-Ana obje ve kapak yazısı merkezdeki
-güvenli alanda tutulmalı.
-
-YouTube Shorts arayüzünün kapatabileceği
-kenarlara kritik bilgi koyma.
-
-Telefon ekranında ilk bakışta okunabilir olsun.
-`;
-
-}else{
-
-prompt+=`
-
-━━━━━━━━━━━━━━━━━━
-
-YOUTUBE FORMAT KURALI:
-
-Tasarım kesinlikle 16:9 YATAY olmalı.
-
-Profesyonel YouTube thumbnail
-kompozisyonuna göre hazırlanmalı.
-
-Küçük önizlemede ana obje ve mesaj
-hemen anlaşılmalı.
-`;
-
-}
-
-
-if(extra){
-
-prompt+=`
-
-━━━━━━━━━━━━━━━━━━
-
-KULLANICININ EK İSTEĞİ:
-
-${extra}
-`;
-
-}
-
-
-if(negative){
-
-prompt+=`
-
-━━━━━━━━━━━━━━━━━━
-
-KULLANICININ İSTEMEDİĞİ ŞEYLER:
-
-${negative}
-`;
-
-}
-
-
-prompt+=`
+${formatRules}
 
 ━━━━━━━━━━━━━━━━━━
 
@@ -1390,86 +1483,78 @@ SON TALİMAT:
 
 Gerekli yaratıcı kararları kendin ver.
 
-Ana yazı kullanıcı tarafından boş bırakıldıysa
-kapak metnini video konusuna göre kendin belirle.
+Ana yazı kullanıcı tarafından boş bırakılmışsa
+video konusuna göre en güçlü kapak yazısını
+kendin belirle.
 
-Açıklama, analiz veya alternatif liste verme.
+Referans YouTube kapağı verilmişse
+onu tasarım analizi için kullan,
+birebir kopyalama.
+
+Kullanıcının yüklediği görseller varsa
+öncelikle bu görsellerdeki önemli objeleri koru.
+
+Açıklama,
+analiz,
+tasarım planı
+veya alternatif liste verme.
 
 Sonuçta yalnızca tamamlanmış,
-yayına hazır profesyonel kapak görselini oluştur.
-`;
+yayına hazır profesyonel kapak görselini oluştur.`;
 
 
-document
-.getElementById("output")
-.textContent=prompt;
-
-
-document
-.getElementById("output")
-.scrollIntoView({
-behavior:"smooth",
-block:"start"
-});
+    document
+        .getElementById("output")
+        .textContent =
+        prompt;
 
 }
 
-
-/* COPY */
 
 async function copyPrompt(){
 
-const text=
-document
-.getElementById("output")
-.textContent;
+    const text =
+        document
+        .getElementById("output")
+        .textContent;
 
-const button=
-document
-.getElementById("copyButton");
+    try{
 
-try{
+        await navigator.clipboard.writeText(text);
 
-await navigator.clipboard.writeText(text);
+        const copied =
+            document.getElementById("copied");
 
-button.innerHTML=
-"✅ PROMPT KOPYALANDI";
+        copied.style.display =
+            "block";
 
-setTimeout(()=>{
+        setTimeout(() => {
 
-button.innerHTML=
-"📋 PROMPTU KOPYALA";
+            copied.style.display =
+                "none";
 
-},1800);
+        },2500);
 
-}
+    }
+    catch(e){
 
-catch(e){
+        const area =
+            document.createElement("textarea");
 
-const temp=
-document.createElement("textarea");
+        area.value =
+            text;
 
-temp.value=text;
+        document.body.appendChild(area);
 
-document.body.appendChild(temp);
+        area.select();
 
-temp.select();
+        document.execCommand("copy");
 
-document.execCommand("copy");
+        area.remove();
 
-temp.remove();
+        alert("Prompt kopyalandı.");
 
-button.innerHTML=
-"✅ PROMPT KOPYALANDI";
-
-setTimeout(()=>{
-
-button.innerHTML=
-"📋 PROMPTU KOPYALA";
-
-},1800);
-
-}
+    }
 
 }
 
